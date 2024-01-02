@@ -18,7 +18,3 @@ https://github.com/paraguayplay/paraguayplay/assets/155405666/03d064a0-d2f2-4a10
 
 
 -->
-
-
-https://github.com/paraguayplay/paraguayplay/assets/155405666/2e2adb8b-c5d5-47cd-96ea-3ae22fa3c16f
-
