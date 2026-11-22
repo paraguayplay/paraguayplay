@@ -44,6 +44,8 @@ Route::prefix('admin')->middleware(['auth:sanctum', 'admin'])->group(function ()
     Route::get('users/{user}', [Admin\UserController::class, 'show']);
     Route::patch('users/{user}', [Admin\UserController::class, 'update']);
     Route::delete('users/{user}/sessions', [Admin\UserController::class, 'destroySessions']);
+    Route::get('users/{user}/plays', [Admin\SecurityController::class, 'plays']);
+    Route::get('security/suspicious', [Admin\SecurityController::class, 'suspicious']);
 
     Route::get('plan-requests', [Admin\PlanRequestController::class, 'index']);
     Route::get('plan-requests/pending-count', [Admin\PlanRequestController::class, 'pendingCount']);
