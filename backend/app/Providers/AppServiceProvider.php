@@ -25,5 +25,14 @@ class AppServiceProvider extends ServiceProvider
 
             return Limit::perMinute(5)->by($email.'|'.$request->ip());
         });
+
+        // Por sesión (k = id del token firmado), no por IP: muchos usuarios comparten IP (CGNAT de operadoras).
+        RateLimiter::for('proxy', function (Request $request) {
+            $token = (string) $request->query('k', '');
+
+            return ctype_digit($token)
+                ? Limit::perMinute(180)->by('proxy:k:'.$token)
+                : Limit::perMinute(60)->by('proxy:ip:'.$request->ip());
+        });
     }
 }

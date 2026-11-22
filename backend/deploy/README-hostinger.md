@@ -112,4 +112,5 @@ php artisan route:cache
 
 - **Sin procesos en segundo plano:** todo funciona sin colas ni cron, lo que encaja con el hosting compartido.
 - **Datos de pago y WhatsApp:** los datos bancarios, el número de WhatsApp de soporte y el enlace del APK se cargan desde el panel de administración.
+- **CDN de Hostinger o Cloudflare:** si lo activas, avísame antes. Hay que configurar `trustProxies` para que se registre la IP real de cada usuario; si no, la detección de cuentas sospechosas no funciona bien.
 - **Proxy de enlaces:** apágalo en los enlaces que no lo necesiten. Cada usuario mirando un enlace con proxy hace una petición liviana cada pocos segundos a tu hosting.

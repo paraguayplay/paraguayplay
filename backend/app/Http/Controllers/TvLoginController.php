@@ -37,9 +37,12 @@ class TvLoginController extends Controller
         ], 201);
     }
 
+    private const CLAIM_GRACE_MINUTES = 2;
+
     public function poll(string $code)
     {
-        $row = $this->findUsable($code);
+        $this->revokeUnclaimed();
+        $row = $this->findUsable($code, claimable: true);
         if (! $row) {
             return $this->expired();
         }
@@ -77,11 +80,36 @@ class TvLoginController extends Controller
         });
     }
 
-    private function findUsable(string $code, bool $lock = false): ?TvLoginCode
+    /**
+     * Un código confirmado se puede reclamar hasta CLAIM_GRACE_MINUTES después de vencer,
+     * para que una confirmación al final del plazo no deje al usuario sin sesión.
+     */
+    private function findUsable(string $code, bool $lock = false, bool $claimable = false): ?TvLoginCode
     {
-        $query = TvLoginCode::where('code', strtoupper($code))->where('consumed', false)->where('expires_at', '>', now());
+        $query = TvLoginCode::where('code', strtoupper($code))->where('consumed', false)
+            ->where(function ($q) use ($claimable) {
+                $q->where('expires_at', '>', now());
+                if ($claimable) {
+                    $q->orWhere(fn ($w) => $w->whereNotNull('user_id')
+                        ->where('expires_at', '>', now()->subMinutes(self::CLAIM_GRACE_MINUTES)));
+                }
+            });
 
         return ($lock ? $query->lockForUpdate() : $query)->first();
+    }
+
+    /** Revoca el token de TV confirmado que nadie reclamó, para no dejar una sesión huérfana. */
+    private function revokeUnclaimed(): void
+    {
+        TvLoginCode::where('consumed', false)->whereNotNull('user_id')
+            ->where('expires_at', '<=', now()->subMinutes(self::CLAIM_GRACE_MINUTES))
+            ->get()
+            ->each(function (TvLoginCode $row) {
+                if ($row->token && str_contains($row->token, '|')) {
+                    \Laravel\Sanctum\PersonalAccessToken::whereKey((int) explode('|', $row->token)[0])->delete();
+                }
+                $row->update(['consumed' => true, 'token' => null, 'session_key' => null]);
+            });
     }
 
     private function expired()

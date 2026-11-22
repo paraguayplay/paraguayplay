@@ -56,7 +56,17 @@ class EventController extends Controller
     public function update(Request $request, Event $event)
     {
         $rules = array_map(fn ($r) => array_merge(['sometimes'], $r), self::RULES);
-        $event->update($request->validate($rules));
+        // Comparar contra el valor guardado cuando solo llega una de las dos fechas
+        $start = $request->input('starts_at', $event->starts_at?->toIso8601String());
+        $rules['ends_at'] = ['sometimes', 'nullable', 'date', 'after:'.$start];
+        $data = $request->validate($rules);
+
+        if (array_key_exists('starts_at', $data) && ! array_key_exists('ends_at', $data) && $event->ends_at
+            && \Illuminate\Support\Carbon::parse($data['starts_at'])->gte($event->ends_at)) {
+            throw \Illuminate\Validation\ValidationException::withMessages(['starts_at' => 'El inicio debe ser anterior al fin del evento.']);
+        }
+
+        $event->update($data);
 
         return new AdminEventResource($event->load('links'));
     }

@@ -18,7 +18,7 @@ Route::get('/health', fn () => ['ok' => true]);
 Route::get('/plans', [PlanController::class, 'index']);
 Route::get('/settings/public', [PublicSettingsController::class, 'show']);
 
-Route::get('/proxy/manifest', [ManifestProxyController::class, 'show'])->middleware('throttle:120,1');
+Route::get('/proxy/manifest', [ManifestProxyController::class, 'show'])->middleware('throttle:proxy');
 
 Route::prefix('auth')->group(function () {
     Route::post('register', [AuthController::class, 'register'])->middleware('throttle:10,1');

@@ -7,9 +7,9 @@ class ProxyUrlSigner
     /** @param array<string, string> $headers cabeceras que el proxy enviará al origen (Referer, User-Agent) */
     public static function sign(string $url, int $ttlSeconds, int $userId, int $tokenId, array $headers = []): string
     {
-        $u = self::b64($url);
+        $u = self::seal($url);
         $e = now()->getTimestamp() + $ttlSeconds;
-        $h = $headers ? self::b64(json_encode($headers, JSON_UNESCAPED_SLASHES)) : '';
+        $h = $headers ? self::seal(json_encode($headers, JSON_UNESCAPED_SLASHES)) : '';
 
         return rtrim(config('app.url'), '/').'/api/proxy/manifest?'.http_build_query(array_filter([
             'u' => $u,
@@ -39,14 +39,14 @@ class ProxyUrlSigner
             return null;
         }
 
-        $url = self::unb64($query['u']);
+        $url = self::open($query['u']);
         if ($url === null) {
             return null;
         }
 
         $out = ['url' => $url, 'user_id' => $i, 'token_id' => $k];
         if ($h !== '') {
-            $out['headers'] = json_decode((string) self::unb64($h), true) ?: [];
+            $out['headers'] = json_decode((string) self::open($h), true) ?: [];
         }
 
         return $out;
@@ -63,6 +63,32 @@ class ProxyUrlSigner
     private static function signature(string $u, int $e, int $userId, int $tokenId, string $h): string
     {
         return hash_hmac('sha256', "{$u}.{$e}.{$userId}.{$tokenId}.{$h}", (string) config('app.key'));
+    }
+
+    /** Cifra (AES-256-GCM) para que la URL del proveedor no se pueda leer desde el navegador. */
+    private static function seal(string $plain): string
+    {
+        $iv = random_bytes(12);
+        $tag = '';
+        $cipher = openssl_encrypt($plain, 'aes-256-gcm', self::key(), OPENSSL_RAW_DATA, $iv, $tag, '', 16);
+
+        return self::b64($iv.$tag.$cipher);
+    }
+
+    private static function open(string $sealed): ?string
+    {
+        $raw = self::unb64($sealed);
+        if ($raw === null || strlen($raw) < 29) {
+            return null;
+        }
+        $plain = openssl_decrypt(substr($raw, 28), 'aes-256-gcm', self::key(), OPENSSL_RAW_DATA, substr($raw, 0, 12), substr($raw, 12, 16));
+
+        return $plain === false ? null : $plain;
+    }
+
+    private static function key(): string
+    {
+        return hash_hmac('sha256', 'proxy-url', (string) config('app.key'), true);
     }
 
     private static function b64(string $s): string
