@@ -9,6 +9,7 @@ use App\Http\Controllers\PasswordResetController;
 use App\Http\Controllers\PlanController;
 use App\Http\Controllers\PlanRequestController;
 use App\Http\Controllers\PublicSettingsController;
+use App\Http\Controllers\TvLoginController;
 use App\Http\Controllers\Admin;
 use Illuminate\Support\Facades\Route;
 
@@ -25,6 +26,9 @@ Route::prefix('auth')->group(function () {
     Route::post('forgot-password', [PasswordResetController::class, 'forgot'])->middleware('throttle:5,1');
     Route::post('reset-password', [PasswordResetController::class, 'reset'])->middleware('throttle:10,1');
     Route::post('logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
+    Route::post('tv-code', [TvLoginController::class, 'create'])->middleware('throttle:10,1');
+    Route::get('tv-code/{code}', [TvLoginController::class, 'poll'])->middleware('throttle:40,1');
+    Route::post('tv-code/{code}/confirm', [TvLoginController::class, 'confirm'])->middleware(['auth:sanctum', 'throttle:10,1']);
 });
 
 Route::middleware('auth:sanctum')->group(function () {
