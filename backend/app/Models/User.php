@@ -42,6 +42,11 @@ class User extends Authenticatable
         return $this->hasMany(PlanRequest::class);
     }
 
+    public function sendPasswordResetNotification($token): void
+    {
+        $this->notify(new \App\Notifications\ResetPasswordNotification($token));
+    }
+
     public function isAdmin(): bool
     {
         return $this->role === 'admin';
