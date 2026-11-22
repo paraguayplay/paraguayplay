@@ -28,4 +28,12 @@ class SubscriptionService
 
         return (int) ceil($now->diffInSeconds($user->expires_at) / 86400);
     }
+
+    /** Renovar con cuenta activa suma a la fecha actual; vencida o nueva cuenta desde ahora. */
+    public function computeExpiry(?Carbon $currentExpiry, int $days, Carbon $now): Carbon
+    {
+        $base = $currentExpiry && $currentExpiry->greaterThan($now) ? $currentExpiry : $now;
+
+        return $base->copy()->addDays($days);
+    }
 }
