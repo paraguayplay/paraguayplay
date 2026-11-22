@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CatalogController;
+use App\Http\Controllers\PlayController;
 use App\Http\Controllers\MeController;
 use App\Http\Controllers\PasswordResetController;
 use App\Http\Controllers\PlanController;
@@ -27,6 +29,11 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::put('me/password', [MeController::class, 'updatePassword']);
     Route::get('plan-requests', [PlanRequestController::class, 'index']);
     Route::post('plan-requests', [PlanRequestController::class, 'store'])->middleware('throttle:10,1');
+
+    Route::middleware('subscribed')->group(function () {
+        Route::get('catalog', [CatalogController::class, 'index']);
+        Route::get('events/{id}/play', [PlayController::class, 'show'])->middleware('throttle:30,1');
+    });
 });
 
 Route::prefix('admin')->middleware(['auth:sanctum', 'admin'])->group(function () {
@@ -42,6 +49,10 @@ Route::prefix('admin')->middleware(['auth:sanctum', 'admin'])->group(function ()
     Route::post('plan-requests/{id}/reject', [Admin\PlanRequestController::class, 'reject']);
 
     Route::apiResource('plans', Admin\PlanController::class)->except('show');
+
+    Route::apiResource('events', Admin\EventController::class);
+    Route::put('events/{event}/links', [Admin\EventLinkController::class, 'update']);
+    Route::post('uploads/image', [Admin\UploadController::class, 'image']);
 
     Route::get('settings', [Admin\SettingsController::class, 'show']);
     Route::put('settings', [Admin\SettingsController::class, 'update']);
