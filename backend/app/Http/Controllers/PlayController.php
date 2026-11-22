@@ -32,7 +32,7 @@ class PlayController extends Controller
             'label' => $l->label,
             'type' => $l->type,
             'url' => $l->use_proxy && $l->type !== 'web'
-                ? ProxyUrlSigner::sign($l->url, self::PROXY_TTL, $user->id, $tokenId)
+                ? ProxyUrlSigner::sign($l->url, self::PROXY_TTL, $user->id, $tokenId, $l->headers ?? [])
                 : $l->url,
             'drm' => [
                 'type' => $l->drm_type,

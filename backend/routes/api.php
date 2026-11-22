@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CatalogController;
 use App\Http\Controllers\PlayController;
+use App\Http\Controllers\ManifestProxyController;
 use App\Http\Controllers\MeController;
 use App\Http\Controllers\PasswordResetController;
 use App\Http\Controllers\PlanController;
@@ -15,6 +16,8 @@ Route::get('/health', fn () => ['ok' => true]);
 
 Route::get('/plans', [PlanController::class, 'index']);
 Route::get('/settings/public', [PublicSettingsController::class, 'show']);
+
+Route::get('/proxy/manifest', [ManifestProxyController::class, 'show'])->middleware('throttle:120,1');
 
 Route::prefix('auth')->group(function () {
     Route::post('register', [AuthController::class, 'register'])->middleware('throttle:10,1');
