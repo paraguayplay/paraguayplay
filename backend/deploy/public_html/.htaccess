@@ -1,0 +1,35 @@
+# PARAGUAY PLAY TV — public_html/.htaccess
+Options -Indexes
+RewriteEngine On
+
+# Forzar HTTPS
+RewriteCond %{HTTPS} !=on
+RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+# Pasar la cabecera Authorization a PHP (necesaria para los tokens)
+RewriteCond %{HTTP:Authorization} .
+RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+
+# API Laravel
+RewriteRule ^api(/.*)?$ laravel.php [L,QSA]
+
+# Archivos que existen (app, imágenes, APK) se sirven directo
+RewriteCond %{REQUEST_FILENAME} -f [OR]
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^ - [L]
+
+# Cualquier otra ruta es de la app (SPA)
+RewriteRule ^ index.html [L]
+
+# No guardar en caché el index ni el service worker; sí los archivos con hash
+<IfModule mod_headers.c>
+  <FilesMatch "^(index\.html|sw\.js|manifest\.webmanifest)$">
+    Header set Cache-Control "no-cache"
+  </FilesMatch>
+  <FilesMatch "\.(js|css|webp|png|svg|woff2)$">
+    Header set Cache-Control "public, max-age=31536000, immutable"
+  </FilesMatch>
+</IfModule>
+
+# Tipo correcto para el APK
+AddType application/vnd.android.package-archive .apk
