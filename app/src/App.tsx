@@ -1,10 +1,12 @@
+import { BrowserRouter } from 'react-router-dom';
 import { IconSprite } from './ui/Icon';
+import { AppRoutes } from './routes';
 
 export function App() {
   return (
-    <>
+    <BrowserRouter>
       <IconSprite />
-      <div className="screen glow"><div className="grain" /></div>
-    </>
+      <AppRoutes />
+    </BrowserRouter>
   );
 }
