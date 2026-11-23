@@ -12,9 +12,10 @@ import { Agenda } from './catalog/Agenda';
 import { Search } from './catalog/Search';
 import { EventDetail } from './catalog/EventDetail';
 import { Player } from './player/Player';
-
-// Pantallas de relleno: cada tarea del plan reemplaza la suya.
-const stub = (name: string) => () => <div className="screen glow" data-testid={`screen-${name}`} />;
+import { Profile } from './profile/Profile';
+import { History } from './profile/History';
+import { ChangePassword } from './profile/ChangePassword';
+import { LinkTv } from './profile/LinkTv';
 
 export const screens = {
   Login,
@@ -31,8 +32,8 @@ export const screens = {
   Search,
   EventDetail,
   Player,
-  Profile: stub('perfil'),
-  History: stub('historial'),
-  ChangePassword: stub('contrasena'),
-  LinkTv: stub('vincular'),
+  Profile,
+  History,
+  ChangePassword,
+  LinkTv,
 };

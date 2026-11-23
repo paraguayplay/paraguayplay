@@ -122,3 +122,5 @@ html.tv .player-title{font-size:38px;font-weight:900}
 html.tv .player-bottom{left:96px;right:96px;bottom:70px}
 html.tv .srv button{font-size:22px;padding:20px 28px;border-radius:16px}
 html.tv .player-center .bigplay{width:96px;height:96px}
+.menu .it{width:100%;text-align:left;color:inherit}
+html:not(.tv) .profile-grid>*+*{margin-top:16px}
