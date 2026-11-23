@@ -1,0 +1,53 @@
+@import '@fontsource/inter/latin-400.css';
+@import '@fontsource/inter/latin-500.css';
+@import '@fontsource/inter/latin-600.css';
+@import '@fontsource/inter/latin-700.css';
+@import '@fontsource/inter/latin-800.css';
+@import '@fontsource/inter/latin-900.css';
+
+html,body,#root{min-height:100%;height:100%}
+body{overscroll-behavior:none;-webkit-tap-highlight-color:transparent;user-select:none}
+input,textarea{user-select:text;font:inherit;color:inherit;background:none;border:none;outline:none;width:100%}
+button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
+a{color:inherit;text-decoration:none}
+
+/* pantalla: ocupa todo y tiene su propio fondo con brillos */
+.screen{position:relative;min-height:100%;overflow-x:hidden;background:var(--bg);padding-top:env(safe-area-inset-top);padding-bottom:calc(110px + env(safe-area-inset-bottom))}
+.screen.nobar{padding-bottom:env(safe-area-inset-bottom)}
+.screen>.z{position:relative;z-index:1}
+.wrap{padding:0 20px}
+.center{text-align:center}
+.h1{font-size:27px;font-weight:900;line-height:1.15}
+.lead{font-size:15px;color:var(--t2);line-height:1.5}
+.err{color:var(--bad);font-size:14px;font-weight:600}
+.notice{display:flex;gap:12px;align-items:center;padding:14px 16px;border-radius:16px;font-size:13.5px;line-height:1.45}
+.notice.ok{background:rgba(43,212,125,.07);border:1px solid rgba(43,212,125,.35)}
+.notice.warn{background:rgba(255,194,61,.07);border:1px solid rgba(255,194,61,.35)}
+.notice.bad{background:rgba(255,77,94,.07);border:1px solid rgba(255,77,94,.35)}
+.btn:disabled,.btn2:disabled{opacity:.55;pointer-events:none}
+.btn,.btn2{width:100%;transition:transform .12s ease,box-shadow .12s ease}
+
+/* animaciones (solo transform/opacity) */
+@keyframes ppt-pulse{0%,100%{opacity:1}50%{opacity:.35}}
+.live::before{animation:ppt-pulse 1.2s ease-in-out infinite}
+@keyframes ppt-in{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.stagger>*{animation:ppt-in .28s ease both}
+.stagger>*:nth-child(2){animation-delay:40ms}.stagger>*:nth-child(3){animation-delay:80ms}
+.stagger>*:nth-child(4){animation-delay:120ms}.stagger>*:nth-child(5){animation-delay:160ms}
+.stagger>*:nth-child(n+6){animation-delay:200ms}
+.page-in{animation:ppt-in .24s ease both}
+.skel{position:relative;overflow:hidden}
+.skel::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(255,255,255,.08),transparent);transform:translateX(-100%);animation:ppt-shimmer 1.3s infinite}
+@keyframes ppt-shimmer{to{transform:translateX(100%)}}
+.poster img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.spin{width:22px;height:22px;border-radius:50%;border:3px solid rgba(255,255,255,.3);border-top-color:#fff;animation:ppt-rot .8s linear infinite}
+@keyframes ppt-rot{to{transform:rotate(360deg)}}
+.hscroll-x{overflow-x:auto;scrollbar-width:none;scroll-snap-type:x proximity}
+.hscroll-x::-webkit-scrollbar{display:none}
+.hscroll-x>*{scroll-snap-align:start;flex:none}
+.tabbar a{color:var(--t3)}
+.tabbar a.on{color:var(--o2)}
+.tabbar a.on svg{filter:drop-shadow(0 0 8px rgba(242,106,10,.7))}
+.tabbar svg{width:24px;height:24px;stroke:currentColor;fill:none;stroke-width:1.9}
+.tabbar a>div{font-size:11px;font-weight:600}
+.up .poster{position:relative}

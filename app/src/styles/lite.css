@@ -1,0 +1,9 @@
+/* ===== Modo liviano ===== */
+html.lite .glassbox,html.lite .soon,html.lite .tabbar,html.lite .modal-bg{backdrop-filter:none;-webkit-backdrop-filter:none}
+html.lite .glassbox{background:rgba(24,24,30,.92)}
+html.lite .tabbar{background:rgba(20,20,26,.97)!important}
+html.lite .stagger>*,html.lite .page-in{animation:none}
+html.lite .glow::after{display:none}
+html.lite .glow::before{filter:blur(60px);opacity:.8}
+html.lite .grain{display:none}
+@media (prefers-reduced-motion: reduce){*{animation-duration:.01ms!important;transition-duration:.01ms!important}}

@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="es"><head><meta charset="utf-8"><link rel="stylesheet" href="style.css">
+<style>
+/* ===== específicos de pantallas ===== */
+.auth{padding:0 26px}
+.hero-logo{display:flex;flex-direction:column;align-items:center;margin:34px 0 26px}
+.hero-logo .halo{position:relative;width:132px;height:132px;display:grid;place-items:center}
+.hero-logo .halo::before{content:"";position:absolute;inset:-26px;border-radius:50%;background:radial-gradient(circle,rgba(242,106,10,.55),transparent 65%);filter:blur(10px)}
+.hero-logo img{position:relative;width:132px;filter:drop-shadow(0 18px 30px rgba(0,0,0,.6))}
+.hero-logo h1{font-size:25px;margin-top:18px}
+.hero-logo p{font-size:14px;color:var(--t2);margin-top:6px}
+.stack>*+*{margin-top:14px}
+.link{color:var(--o2);font-weight:600;font-size:14px}
+.or{display:flex;align-items:center;gap:12px;color:var(--t3);font-size:12px;margin:20px 0}
+.or::before,.or::after{content:"";flex:1;height:1px;background:var(--gb)}
+
+.top{display:flex;align-items:center;justify-content:space-between;padding:6px 20px 0}
+.top .l{display:flex;align-items:center;gap:10px}
+.top img{width:34px}
+.top .brand{font-size:15px}
+.avatar{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;font-weight:800;font-size:15px;background:linear-gradient(135deg,#2A2A33,#17171D);border:1px solid var(--gb);box-shadow:0 0 0 2px rgba(242,106,10,.6)}
+.back{width:40px;height:40px;border-radius:13px;display:grid;place-items:center}
+
+.plan{position:relative;padding:20px;border-radius:22px}
+.plan .pr{white-space:nowrap;font-size:26px;font-weight:900;letter-spacing:-.5px}
+.plan .pr small{font-size:14px;color:var(--t2);font-weight:600;letter-spacing:0}
+.plan.sel{border:1.5px solid var(--o);background:linear-gradient(180deg,rgba(242,106,10,.16),rgba(242,106,10,.04));box-shadow:0 0 0 4px rgba(242,106,10,.12),0 20px 50px rgba(242,106,10,.18),inset 0 1px 0 rgba(255,255,255,.12)}
+.radio{width:24px;height:24px;border-radius:50%;border:2px solid var(--t3)}
+.radio.on{border-color:var(--o);background:radial-gradient(circle,var(--o2) 0 6px,transparent 7px)}
+.badge{position:absolute;top:-11px;right:18px;background:linear-gradient(180deg,#FFD36A,#F5A623);color:#3A2300;font-size:11px;font-weight:900;padding:5px 10px;border-radius:8px;letter-spacing:.5px;box-shadow:0 6px 14px rgba(245,166,35,.35)}
+
+.kv{display:flex;justify-content:space-between;padding:11px 0;font-size:14px;border-bottom:1px dashed rgba(255,255,255,.08)}
+.kv:last-child{border:none}
+.kv span{color:var(--t2)}
+.kv b{font-weight:700}
+.copy{width:30px;height:30px;border-radius:9px;display:grid;place-items:center;background:rgba(242,106,10,.14);color:var(--o2);margin-left:8px}
+
+.steps{display:flex;gap:6px;margin:0 0 18px}
+.steps div{flex:1;height:5px;border-radius:3px;background:rgba(255,255,255,.1)}
+.steps .on{background:linear-gradient(90deg,var(--o),var(--o2));box-shadow:0 0 10px rgba(242,106,10,.6)}
+
+.hscroll{display:flex;gap:12px;overflow:hidden}
+.feat{height:196px;border-radius:24px}
+.feat .meta h2{font-size:23px;font-weight:900;line-height:1.1}
+.dots{display:flex;gap:6px;justify-content:center;margin:10px 0 14px}
+.dots i{width:6px;height:6px;border-radius:3px;background:rgba(255,255,255,.25)}
+.dots i.on{width:20px;background:var(--o)}
+.card{flex:none;width:150px}
+.card .poster{height:96px;border-radius:16px}
+.card h4{font-size:14px;font-weight:700;margin-top:9px;line-height:1.25}
+.card p{font-size:12px;color:var(--t2);margin-top:3px}
+.up{display:flex;gap:12px;align-items:center;padding:10px;border-radius:18px;margin-bottom:10px}
+.up .poster{width:74px;height:74px;border-radius:14px;flex:none}
+.date{flex:none;width:52px;text-align:center}
+.date b{display:block;font-size:22px;font-weight:900;line-height:1}
+.date span{font-size:11px;color:var(--o2);font-weight:800;letter-spacing:1px}
+.bell{margin-left:auto;width:38px;height:38px;border-radius:12px;display:grid;place-items:center;color:var(--t2)}
+
+.player{position:absolute;inset:0;background:linear-gradient(135deg,#0E3B1A,#1F7A34 55%,#0B2A12)}
+.player .field-lines{position:absolute;inset:0;opacity:.35}
+.wm{position:absolute;font-size:13px;font-weight:700;color:rgba(255,255,255,.16);letter-spacing:1px;transform:rotate(-12deg)}
+.ctrl{position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.65),transparent 30%,transparent 62%,rgba(0,0,0,.8))}
+.bigplay{width:74px;height:74px;border-radius:50%;display:grid;place-items:center;background:rgba(242,106,10,.92);box-shadow:inset 0 2px 0 rgba(255,255,255,.4),0 6px 0 var(--o3),0 0 40px rgba(242,106,10,.6)}
+.bar{height:5px;border-radius:3px;background:rgba(255,255,255,.2);position:relative}
+.bar i{position:absolute;left:0;top:0;bottom:0;width:100%;border-radius:3px;background:linear-gradient(90deg,var(--o),#E11D2E)}
+.srv{display:flex;gap:8px}
+.srv div{padding:8px 12px;border-radius:10px;font-size:12px;font-weight:700;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.15)}
+.srv .on{background:var(--o);border-color:var(--o)}
+
+.code{display:flex;gap:9px;justify-content:center}
+.code div{width:44px;height:58px;border-radius:13px;display:grid;place-items:center;font-size:26px;font-weight:900;background:rgba(255,255,255,.05);border:1px solid var(--gb);box-shadow:inset 0 2px 6px rgba(0,0,0,.4)}
+.code .cur{border-color:var(--o);box-shadow:0 0 0 4px rgba(242,106,10,.18)}
+.code .dash{width:12px;background:none;border:none;box-shadow:none;color:var(--t3)}
+
+.menu .it{display:flex;align-items:center;gap:14px;padding:11px 16px;font-size:15px;font-weight:600}
+.menu .it+.it{border-top:1px solid var(--gb)}
+.menu .it .ic{width:36px;height:36px;border-radius:11px;display:grid;place-items:center;background:rgba(242,106,10,.12);color:var(--o2)}
+.menu .chev{margin-left:auto;color:var(--t3)}
+.ring{width:96px;height:96px;border-radius:50%;display:grid;place-items:center;background:conic-gradient(var(--o) 0 62%,rgba(255,255,255,.08) 62% 100%);box-shadow:0 0 30px rgba(242,106,10,.35)}
+.ring div{width:78px;height:78px;border-radius:50%;background:var(--bg2);display:grid;place-items:center;text-align:center}
+.ring b{font-size:26px;font-weight:900;display:block;line-height:1}
+.ring span{font-size:10px;color:var(--t2);font-weight:700;letter-spacing:.5px}
+
+.modal-bg{position:absolute;inset:0;background:rgba(0,0,0,.6);backdrop-filter:blur(6px);z-index:6}
+.sheet{position:absolute;left:14px;right:14px;bottom:24px;z-index:7;padding:26px 22px 22px;text-align:center}
+.warnic{width:72px;height:72px;margin:0 auto 14px;border-radius:22px;display:grid;place-items:center;background:linear-gradient(180deg,rgba(255,194,61,.25),rgba(255,194,61,.08));border:1px solid rgba(255,194,61,.4);color:var(--warn);box-shadow:0 0 30px rgba(255,194,61,.25)}
+
+/* ====== TV ====== */
+.tvtop{display:flex;align-items:center;justify-content:space-between;padding:48px 96px 0}
+.tvtop .l{display:flex;align-items:center;gap:18px}
+.tvtop img{width:64px}
+.tvtop .brand{font-size:30px}
+.tvnav{display:flex;gap:14px}
+.tvnav div{height:56px;padding:0 28px;border-radius:999px;display:flex;align-items:center;gap:10px;font-size:22px;font-weight:700;color:var(--t2)}
+.tvnav .on{background:var(--glass);border:1px solid var(--gb);color:var(--t)}
+.tvuser{display:flex;align-items:center;gap:16px;font-size:22px;font-weight:600}
+.tvuser .avatar{width:56px;height:56px;font-size:22px}
+.tvhero{position:absolute;left:0;right:0;top:0;height:720px}
+.tvhero .art{position:absolute;inset:0}
+.tvhero .fade{position:absolute;inset:0;background:linear-gradient(90deg,rgba(9,9,13,.98) 0%,rgba(9,9,13,.85) 32%,rgba(9,9,13,.1) 70%),linear-gradient(0deg,var(--bg) 0%,transparent 40%)}
+.tvrow{display:flex;gap:30px;padding:0 96px}
+.tvcard{flex:none;width:400px}
+.tvcard .poster{height:225px;border-radius:22px}
+.tvcard h4{font-size:24px;font-weight:700;margin-top:16px}
+.tvcard p{font-size:19px;color:var(--t2);margin-top:5px}
+.tvsec{font-size:28px;font-weight:800;padding:0 96px;margin-bottom:22px;letter-spacing:.3px;display:flex;align-items:center;gap:16px}
+.tvbtn{height:76px;padding:0 40px;font-size:24px;border-radius:20px}
+.tvhint{position:absolute;bottom:34px;right:96px;display:flex;gap:30px;font-size:19px;color:var(--t3);font-weight:600;z-index:3}
+.tvhint b{display:inline-grid;place-items:center;min-width:40px;height:34px;padding:0 10px;border-radius:9px;border:1px solid var(--gb);background:var(--glass);color:var(--t2);margin-right:8px;font-size:15px}
+</style></head>
+<body>
+<svg width="0" height="0" style="position:absolute">
+ <defs>
+  <symbol id="i-mail" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="m4 7 8 6 8-6"/></symbol>
+  <symbol id="i-lock" viewBox="0 0 24 24"><rect x="4" y="10" width="16" height="11" rx="3"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></symbol>
+  <symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c1-4 4.5-6 8-6s7 2 8 6"/></symbol>
+  <symbol id="i-phone" viewBox="0 0 24 24"><rect x="6" y="2" width="12" height="20" rx="3"/><path d="M11 18h2"/></symbol>
+  <symbol id="i-eye" viewBox="0 0 24 24"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></symbol>
+  <symbol id="i-home" viewBox="0 0 24 24"><path d="M3 11 12 4l9 7v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1Z"/></symbol>
+  <symbol id="i-grid" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="2"/><rect x="14" y="3" width="7" height="7" rx="2"/><rect x="3" y="14" width="7" height="7" rx="2"/><rect x="14" y="14" width="7" height="7" rx="2"/></symbol>
+  <symbol id="i-cal" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M3 10h18M8 3v4M16 3v4"/></symbol>
+  <symbol id="i-tv" viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="13" rx="3"/><path d="M8 21h8M12 18v3"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></symbol>
+  <symbol id="i-back" viewBox="0 0 24 24"><path d="M15 5 8 12l7 7"/></symbol>
+  <symbol id="i-chev" viewBox="0 0 24 24"><path d="m9 5 7 7-7 7"/></symbol>
+  <symbol id="i-play" viewBox="0 0 24 24"><path d="M7 4.5v15l13-7.5Z" fill="currentColor" stroke="none"/></symbol>
+  <symbol id="i-pause" viewBox="0 0 24 24"><rect x="6" y="4" width="4" height="16" rx="1" fill="currentColor" stroke="none"/><rect x="14" y="4" width="4" height="16" rx="1" fill="currentColor" stroke="none"/></symbol>
+  <symbol id="i-copy" viewBox="0 0 24 24"><rect x="8" y="8" width="13" height="13" rx="3"/><path d="M16 8V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h3"/></symbol>
+  <symbol id="i-wa" viewBox="0 0 24 24"><path d="M4 20l1.3-4A8 8 0 1 1 8 19Z"/><path d="M9 9.5c.3 2 2.2 4.2 4.6 4.8l1.2-1.2 1.8.9-.4 1.6c-3.6.4-7.6-3.3-7.6-7.2l1.6-.4.9 1.8Z" fill="currentColor" stroke="none"/></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+  <symbol id="i-bell" viewBox="0 0 24 24"><path d="M6 16V11a6 6 0 0 1 12 0v5l2 2H4Z"/><path d="M10 21h4"/></symbol>
+  <symbol id="i-cast" viewBox="0 0 24 24"><path d="M2 8V6a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-6"/><path d="M2 12a8 8 0 0 1 8 8M2 16a4 4 0 0 1 4 4"/><circle cx="2.5" cy="19.5" r=".5"/></symbol>
+  <symbol id="i-full" viewBox="0 0 24 24"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></symbol>
+  <symbol id="i-vol" viewBox="0 0 24 24"><path d="M4 9h4l5-4v14l-5-4H4Z"/><path d="M16 9a4 4 0 0 1 0 6M19 6a8 8 0 0 1 0 12"/></symbol>
+  <symbol id="i-refresh" viewBox="0 0 24 24"><path d="M20 11a8 8 0 1 0-2.3 5.7M20 4v7h-7"/></symbol>
+  <symbol id="i-key" viewBox="0 0 24 24"><circle cx="8" cy="15" r="4"/><path d="m11 12 9-9M17 6l3 3"/></symbol>
+  <symbol id="i-out" viewBox="0 0 24 24"><path d="M15 4h3a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-3M10 8l-4 4 4 4M6 12h10"/></symbol>
+  <symbol id="i-hist" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5M12 7v5l3 2"/></symbol>
+  <symbol id="i-swap" viewBox="0 0 24 24"><path d="M4 8h14l-4-4M20 16H6l4 4"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12 5 5 9-10"/></symbol>
+  <symbol id="i-alert" viewBox="0 0 24 24"><path d="M12 3 2 20h20Z"/><path d="M12 10v4M12 17h.01"/></symbol>
+  <symbol id="i-help" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9.5 9a2.5 2.5 0 1 1 3.5 2.3c-.6.3-1 .9-1 1.7M12 17h.01"/></symbol>
+  <symbol id="i-share" viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="m8.6 13.5 6.8 4M15.4 6.5l-6.8 4"/></symbol>
+ </defs>
+</svg>
+
+<!-- ==================== CELULAR ==================== -->
+
+<!-- 01 Iniciar sesión -->
+<section id="p01" class="phone glow"><div class="grain"></div><div class="z">
+ <div class="sb"><span>9:41</span><i>●●● 5G ▮</i></div>
+ <div class="auth">
+  <div class="hero-logo"><div class="halo"><img src="../../../../assets/logo.png"></div>
+   <h1 class="brand">PARAGUAY PLAY <b>TV</b></h1><p>Eventos en vivo, donde estés</p></div>
+  <div class="glassbox" style="padding:22px">
+   <div class="stack">
+    <div><div class="lbl">Correo</div><div class="field f"><svg><use href="#i-mail"/></svg>juan.benitez@gmail.com</div></div>
+    <div><div class="lbl">Contraseña</div><div class="field"><svg><use href="#i-lock"/></svg>••••••••••<svg style="margin-left:auto"><use href="#i-eye"/></svg></div></div>
+   </div>
+   <div style="text-align:right;margin:14px 2px 18px"><span class="link">¿Olvidaste tu contraseña?</span></div>
+   <div class="btn">Iniciar sesión</div>
+  </div>
+  <div class="or">¿Primera vez?</div>
+  <div class="btn2">Crear cuenta</div>
+ </div>
+</div></section>
+
+<!-- 02 Registro -->
+<section id="p02" class="phone glow"><div class="grain"></div><div class="z">
+ <div class="sb"><span>9:41</span><i>●●● 5G ▮</i></div>
+ <div class="top"><div class="back glassbox" style="border-radius:13px"><svg class="ico"><use href="#i-back"/></svg></div><img src="../../../../assets/logo.png" style="width:34px"><div style="width:40px"></div></div>
+ <div class="auth">
+  <h1 style="font-size:28px;font-weight:900;margin:22px 0 6px">Crear cuenta</h1>
+  <p class="mut" style="font-size:15px;margin-bottom:20px">Registrate y elegí tu plan para empezar a ver.</p>
+  <div class="stack">
+   <div><div class="lbl">Nombre y apellido</div><div class="field" style="color:var(--t)"><svg><use href="#i-user"/></svg>Juan Benítez</div></div>
+   <div><div class="lbl">Correo</div><div class="field" style="color:var(--t)"><svg><use href="#i-mail"/></svg>juan.benitez@gmail.com</div></div>
+   <div><div class="lbl">Teléfono / WhatsApp</div><div class="field f"><svg><use href="#i-phone"/></svg>+595 981 234 567</div></div>
+   <div><div class="lbl">Contraseña</div><div class="field"><svg><use href="#i-lock"/></svg>Mínimo 8 caracteres</div></div>
+  </div>
+  <div class="row small mut" style="gap:10px;margin:18px 2px 20px"><div style="width:22px;height:22px;border-radius:7px;background:var(--o);display:grid;place-items:center;flex:none"><svg class="ico" style="width:15px;height:15px;color:#fff;stroke-width:3"><use href="#i-check"/></svg></div>Acepto los términos y la política de privacidad</div>
+  <div class="btn">Continuar</div>
+  <p class="small mut" style="text-align:center;margin-top:18px">¿Ya tenés cuenta? <span class="link">Iniciar sesión</span></p>
+ </div>
+</div></section>
+
+<!-- 03 Recuperar contraseña -->
+<section id="p03" class="phone glow"><div class="grain"></div><div class="z">
+ <div class="sb"><span>9:41</span><i>●●● 5G ▮</i></div>
+ <div class="top"><div class="back glassbox" style="border-radius:13px"><svg class="ico"><use href="#i-back"/></svg></div><div></div><div style="width:40px"></div></div>
+ <div class="auth">
+  <div style="width:86px;height:86px;border-radius:26px;margin:40px auto 24px;display:grid;place-items:center;color:var(--o2)" class="glassbox"><svg class="ico" style="width:42px;height:42px"><use href="#i-key"/></svg></div>
+  <h1 style="font-size:27px;font-weight:900;text-align:center">¿Olvidaste tu contraseña?</h1>
+  <p class="mut" style="font-size:15px;text-align:center;margin:10px 10px 30px;line-height:1.5">Escribí tu correo y te mandamos un enlace para crear una nueva. Vence en 1 hora.</p>
+  <div class="lbl">Correo</div><div class="field f"><svg><use href="#i-mail"/></svg>juan.benitez@gmail.com</div>
+  <div class="btn" style="margin-top:22px">Enviar enlace</div>
+  <div class="glassbox row" style="gap:12px;padding:14px 16px;margin-top:26px;border-radius:16px;border-color:rgba(43,212,125,.35);background:rgba(43,212,125,.07)">
+   <svg class="ico" style="color:var(--ok);flex:none"><use href="#i-check"/></svg>
+   <span class="small" style="line-height:1.45">Si el correo está registrado, te llegará el enlace en unos minutos. Revisá también la carpeta de spam.</span></div>
+ </div>
+</div></section>
+
+<!-- 04 Planes -->
+<section id="p04" class="phone glow"><div class="grain"></div><div class="z">
+ <div class="sb"><span>9:41</span><i>●●● 5G ▮</i></div>
+ <div class="top"><div class="l"><img src="../../../../assets/logo.png"><span class="brand">PARAGUAY PLAY <b>TV</b></span></div><div class="avatar">J</div></div>
+ <div style="padding:0 20px">
+  <div class="steps" style="margin-top:20px"><div class="on"></div><div></div><div></div></div>
+  <h1 style="font-size:27px;font-weight:900">Elegí tu plan</h1>
+  <p class="mut" style="font-size:14.5px;margin:6px 0 22px">Tu cuenta está lista. Activala con un plan para ver todos los eventos en vivo.</p>
+  <div class="glassbox plan row" style="gap:14px;margin-bottom:16px"><div class="radio"></div><div style="flex:1"><div style="font-weight:800;font-size:17px">Semanal</div><div class="small mut">7 días de acceso</div></div><div class="pr">Gs 5.000</div></div>
+  <div class="glassbox plan sel row" style="gap:14px;margin-bottom:16px"><div class="badge">MÁS ELEGIDO</div><div class="radio on"></div><div style="flex:1"><div style="font-weight:800;font-size:17px">Mensual</div><div class="small mut">1 mes de acceso</div></div><div class="pr">Gs 20.000</div></div>
+  <div class="glassbox plan row" style="gap:14px"><div class="radio"></div><div style="flex:1"><div style="font-weight:800;font-size:17px">Anual</div><div class="small" style="color:var(--ok);font-weight:700">Equivale a 12 meses</div></div><div class="pr">Gs 240.000</div></div>
+  <div class="glassbox" style="padding:16px;margin:22px 0;border-radius:18px">
+   <div class="row small" style="gap:10px;margin-bottom:9px"><svg class="ico" style="color:var(--o2);width:18px"><use href="#i-check"/></svg>Todos los eventos en vivo</div>
+   <div class="row small" style="gap:10px;margin-bottom:9px"><svg class="ico" style="color:var(--o2);width:18px"><use href="#i-check"/></svg>Celular, tablet y Smart TV</div>
+   <div class="row small" style="gap:10px"><svg class="ico" style="color:var(--o2);width:18px"><use href="#i-check"/></svg>Pago por transferencia, activación manual</div>
+  </div>
+  <div class="btn">Continuar con Mensual</div>
+ </div>
+</div></section>
+
+<!-- 05 Pago -->
+<section id="p05" class="phone glow"><div class="grain"></div><div class="z">
+ <div class="sb"><span>9:41</span><i>●●● 5G ▮</i></div>
+ <div class="top"><div class="back glassbox" style="border-radius:13px"><svg class="ico"><use href="#i-back"/></svg></div><span style="font-weight:700">Pagar plan</span><div style="width:40px"></div></div>
+ <div style="padding:0 20px">
+  <div class="steps" style="margin-top:20px"><div class="on"></div><div class="on"></div><div></div></div>
+  <div class="glassbox" style="padding:20px;text-align:center;border-radius:22px;background:linear-gradient(180deg,rgba(242,106,10,.18),rgba(255,255,255,.03))">
+   <div class="small mut">Plan Mensual · Solicitud N.º 128</div>
+   <div style="font-size:40px;font-weight:900;letter-spacing:-1px;margin-top:4px">Gs 20.000</div>
+  </div>
+  <h3 style="font-size:16px;font-weight:800;margin:22px 0 10px">1. Transferí a esta cuenta</h3>
+  <div class="glassbox" style="padding:6px 18px;border-radius:18px">
+   <div class="kv"><span>Banco</span><b>Banco Continental</b></div>
+   <div class="kv"><span>Titular</span><b>Paraguay Play TV</b></div>
+   <div class="kv"><span>Cuenta</span><b class="row">1234-567890<span class="copy"><svg class="ico" style="width:16px"><use href="#i-copy"/></svg></span></b></div>
+   <div class="kv"><span>RUC / CI</span><b>4.567.890-1</b></div>
+   <div class="kv"><span>Alias</span><b class="row">0981234567<span class="copy"><svg class="ico" style="width:16px"><use href="#i-copy"/></svg></span></b></div>
+  </div>
+  <h3 style="font-size:16px;font-weight:800;margin:22px 0 10px">2. Mandanos el comprobante</h3>
+  <div class="btn wa"><svg class="ico" style="width:24px;height:24px"><use href="#i-wa"/></svg>Enviar comprobante por WhatsApp</div>
+  <p class="small mut" style="text-align:center;margin-top:14px;line-height:1.45">Se abre WhatsApp con tus datos y el número de solicitud ya escritos. Solo adjuntá la foto.</p>
+ </div>
+</div></section>
+
+<!-- 06 Solicitud en revisión -->
+<section id="p06" class="phone glow"><div class="grain"></div><div class="z">
+ <div class="sb"><span>9:41</span><i>●●● 5G ▮</i></div>
+ <div class="top"><div class="l"><img src="../../../../assets/logo.png"><span class="brand">PARAGUAY PLAY <b>TV</b></span></div><div class="avatar">J</div></div>
+ <div style="padding:0 22px;text-align:center">
+  <div class="steps" style="margin-top:20px"><div class="on"></div><div class="on"></div><div class="on"></div></div>
+  <div style="position:relative;width:150px;height:150px;margin:36px auto 26px;display:grid;place-items:center">
+   <div style="position:absolute;inset:0;border-radius:50%;background:conic-gradient(from 200deg,var(--o) 0 70%,transparent 70%);-webkit-mask:radial-gradient(circle,transparent 62px,#000 63px);filter:drop-shadow(0 0 14px rgba(242,106,10,.7))"></div>
+   <div style="position:absolute;inset:16px;border-radius:50%" class="glassbox"></div>
+   <svg class="ico" style="position:relative;width:58px;height:58px;color:var(--o2)"><use href="#i-clock"/></svg></div>
+  <span class="pill warn"><span class="dot"></span>Solicitud en revisión</span>
+  <h1 style="font-size:26px;font-weight:900;margin:16px 0 10px">¡Recibimos tu pedido!</h1>
+  <p class="mut" style="font-size:15px;line-height:1.55">Apenas confirmemos la transferencia, tu cuenta se activa sola y te avisamos. Suele tardar menos de una hora.</p>
+  <div class="glassbox" style="padding:6px 18px;border-radius:18px;margin:24px 0;text-align:left">
+   <div class="kv"><span>Solicitud</span><b>N.º 128</b></div>
+   <div class="kv"><span>Plan</span><b>Mensual</b></div>
+   <div class="kv"><span>Monto</span><b>Gs 20.000</b></div>
+  </div>
+  <div class="btn wa" style="margin-bottom:14px"><svg class="ico" style="width:24px;height:24px"><use href="#i-wa"/></svg>Reenviar comprobante</div>
+  <div class="btn2">Cambiar de plan</div>
+ </div>
+</div></section>
+
+<!-- 07 Inicio -->
+<section id="p07" class="phone glow"><div class="grain"></div><div class="z">
+ <div class="sb"><span>9:41</span><i>●●● 5G ▮</i></div>
+ <div class="top"><div class="l"><img src="../../../../assets/logo.png"><span class="brand">PARAGUAY PLAY <b>TV</b></span></div><div class="row" style="gap:10px"><div class="back glassbox" style="border-radius:13px"><svg class="ico"><use href="#i-search"/></svg></div><div class="avatar">J</div></div></div>
+ <div style="padding:16px 20px 0">
+  <div class="poster feat"><div class="art a1"></div><div class="shade"></div>
+   <div class="tag"><span class="live">EN VIVO</span></div>
+   <div class="meta"><div class="small" style="color:var(--o2);font-weight:800;letter-spacing:1px;margin-bottom:6px">DEPORTES · DESTACADO</div><h2>Final Copa Interbarrios 2026</h2>
+    <div class="row" style="justify-content:space-between;margin-top:12px"><span class="small mut">Estadio Municipal · 2.340 viendo</span><div class="btn" style="height:40px;padding:0 16px;font-size:14px;border-radius:12px"><svg class="ico" style="width:16px"><use href="#i-play"/></svg>Ver</div></div></div></div>
+  <div class="dots"><i class="on"></i><i></i><i></i></div>
+  <div class="row" style="gap:8px;margin-bottom:16px;overflow:hidden"><div class="chip on">Todos</div><div class="chip">Deportes</div><div class="chip">Música</div><div class="chip">Religiosos</div></div>
+  <div class="sec"><h3><span class="live" style="margin-right:8px;vertical-align:2px">EN VIVO</span>Ahora</h3><span>Ver todo</span></div>
+  <div class="hscroll" style="margin-bottom:16px">
+   <div class="card"><div class="poster"><div class="art a2"></div><div class="shade"></div><div class="tag"><span class="live">VIVO</span></div></div><h4>Festival de Polca y Guarania</h4><p>Música · San Bernardino</p></div>
+   <div class="card"><div class="poster"><div class="art a3"></div><div class="shade"></div><div class="tag"><span class="live">VIVO</span></div></div><h4>Culto de Domingo</h4><p>Religiosos · Asunción</p></div>
+   <div class="card"><div class="poster"><div class="art a4"></div><div class="shade"></div></div><h4>Conferencia Tech</h4><p>Conferencias</p></div>
+  </div>
+  <div class="sec"><h3>Próximos</h3><span>Ver todo</span></div>
+  <div class="glassbox up"><div class="date"><span>SÁB</span><b>28</b></div><div class="poster"><div class="art a5"></div></div><div><h4 style="font-size:14px;font-weight:700">Noche de Rock Paraguayo</h4><p class="small mut" style="margin-top:3px">20:00 · Música</p></div><div class="bell glassbox"><svg class="ico" style="width:18px"><use href="#i-bell"/></svg></div></div>
+ </div>
+ <div class="tabbar glassbox" style="background:rgba(20,20,26,.82)"><div class="on"><svg><use href="#i-home"/></svg>Inicio</div><div><svg><use href="#i-grid"/></svg>Categorías</div><div><svg><use href="#i-cal"/></svg>Agenda</div><div><svg><use href="#i-user"/></svg>Perfil</div></div>
+</div></section>
+
+<!-- 08 Detalle evento -->
+<section id="p08" class="phone"><div class="z">
+ <div class="poster" style="height:390px;border-radius:0"><div class="art a1"></div><div class="shade" style="background:linear-gradient(180deg,rgba(9,9,13,.4),transparent 30%,rgba(9,9,13,.6) 70%,var(--bg))"></div>
+  <div class="sb" style="position:relative"><span>9:41</span><i>●●● 5G ▮</i></div>
+  <div class="top" style="position:relative"><div class="back glassbox" style="border-radius:13px"><svg class="ico"><use href="#i-back"/></svg></div><div class="back glassbox" style="border-radius:13px"><svg class="ico"><use href="#i-share"/></svg></div></div>
+  <div style="position:absolute;inset:0;display:grid;place-items:center"><div class="bigplay"><svg class="ico" style="width:32px;height:32px;color:#fff;margin-left:4px"><use href="#i-play"/></svg></div></div>
+ </div>
+ <div style="padding:0 20px;margin-top:-40px;position:relative">
+  <div class="row" style="gap:8px;margin-bottom:12px"><span class="live">EN VIVO</span><span class="soon">Deportes</span><span class="soon">HD</span></div>
+  <h1 style="font-size:27px;font-weight:900;line-height:1.12">Final Copa Interbarrios 2026</h1>
+  <p class="small mut" style="margin:8px 0 16px">Hoy · 19:30 a 22:00 · Estadio Municipal</p>
+  <div class="btn" style="margin-bottom:12px"><svg class="ico" style="width:20px"><use href="#i-play"/></svg>Ver en vivo</div>
+  <div class="row" style="gap:12px;margin-bottom:20px"><div class="btn2" style="flex:1;height:48px;font-size:14px"><svg class="ico" style="width:18px"><use href="#i-cast"/></svg>Enviar al TV</div><div class="btn2" style="flex:1;height:48px;font-size:14px"><svg class="ico" style="width:18px"><use href="#i-bell"/></svg>Recordarme</div></div>
+  <p style="font-size:14.5px;line-height:1.55;color:var(--t2)">Los dos mejores equipos del torneo se enfrentan por el título. Transmisión oficial con relato y cámaras en alta definición.</p>
+  <div class="lbl" style="margin:18px 0 10px">Servidores</div>
+  <div class="row" style="gap:8px"><div class="chip on">Servidor 1 HD</div><div class="chip">Servidor 2</div><div class="chip">Web</div></div>
+ </div>
+</div></section>
+
+<!-- 09 Reproductor (horizontal) -->
+<section id="p09" class="phoneL"><div class="player">
+  <svg class="field-lines" viewBox="0 0 844 390" preserveAspectRatio="none"><g stroke="#fff" stroke-width="2" fill="none"><rect x="40" y="30" width="764" height="330"/><line x1="422" y1="30" x2="422" y2="360"/><circle cx="422" cy="195" r="60"/><rect x="40" y="110" width="90" height="170"/><rect x="714" y="110" width="90" height="170"/></g></svg>
+  <div class="wm" style="left:180px;top:230px">ID 48213 · juan.b</div>
+  <div class="ctrl"></div>
+  <div style="position:absolute;top:16px;left:24px;right:24px" class="row"><div class="back" style="color:#fff"><svg class="ico"><use href="#i-back"/></svg></div><div style="margin-left:8px"><div style="font-weight:800;font-size:16px">Final Copa Interbarrios 2026</div><div class="small mut">Servidor 1 HD</div></div>
+   <div class="row" style="margin-left:auto;gap:18px;color:#fff"><svg class="ico"><use href="#i-cast"/></svg><svg class="ico"><use href="#i-vol"/></svg></div></div>
+  <div style="position:absolute;inset:0;display:grid;place-items:center"><div class="row" style="gap:60px"><svg class="ico" style="width:30px;height:30px;color:#fff"><use href="#i-refresh"/></svg><div class="bigplay"><svg class="ico" style="width:30px;height:30px;color:#fff"><use href="#i-pause"/></svg></div><svg class="ico" style="width:30px;height:30px;color:#fff"><use href="#i-full"/></svg></div></div>
+  <div style="position:absolute;left:24px;right:24px;bottom:18px">
+   <div class="row" style="justify-content:space-between;margin-bottom:12px"><span class="live">EN VIVO</span><div class="srv"><div class="on">Servidor 1 HD</div><div>Servidor 2</div><div>Web</div></div></div>
+   <div class="bar"><i></i></div></div>
+</div></section>
+
+<!-- 10 Perfil -->
+<section id="p10" class="phone glow"><div class="grain"></div><div class="z">
+ <div class="sb"><span>9:41</span><i>●●● 5G ▮</i></div>
+ <div style="padding:10px 20px 0">
+  <h1 style="font-size:27px;font-weight:900;margin-bottom:14px">Mi perfil</h1>
+  <div class="glassbox" style="padding:20px;border-radius:24px;background:linear-gradient(160deg,rgba(242,106,10,.2),rgba(255,255,255,.03) 60%)">
+   <div class="row" style="gap:14px"><div class="avatar" style="width:54px;height:54px;font-size:21px">J</div><div><div style="font-weight:800;font-size:18px">Juan Benítez</div><div class="small mut">juan.benitez@gmail.com</div></div></div>
+   <div class="hr"></div>
+   <div class="row" style="gap:18px"><div class="ring"><div><b>18</b><span>DÍAS</span></div></div>
+    <div><span class="pill ok"><span class="dot"></span>Activa</span><div style="font-weight:800;font-size:18px;margin-top:10px">Plan Mensual</div><div class="small mut" style="margin-top:2px">Vence el 10 de diciembre</div></div></div>
+   <div class="row" style="gap:10px;margin-top:18px"><div class="btn" style="flex:1;height:48px;font-size:15px">Renovar</div><div class="btn2" style="flex:1;height:48px;font-size:15px">Cambiar de plan</div></div>
+  </div>
+  <div class="glassbox menu" style="margin-top:16px;border-radius:20px">
+   <div class="it"><div class="ic"><svg class="ico" style="width:19px"><use href="#i-hist"/></svg></div>Historial de planes<svg class="ico chev" style="width:18px"><use href="#i-chev"/></svg></div>
+   <div class="it"><div class="ic"><svg class="ico" style="width:19px"><use href="#i-tv"/></svg></div>Vincular un televisor<svg class="ico chev" style="width:18px"><use href="#i-chev"/></svg></div>
+   <div class="it"><div class="ic"><svg class="ico" style="width:19px"><use href="#i-lock"/></svg></div>Cambiar contraseña<svg class="ico chev" style="width:18px"><use href="#i-chev"/></svg></div>
+   <div class="it"><div class="ic"><svg class="ico" style="width:19px"><use href="#i-help"/></svg></div>Ayuda y soporte<svg class="ico chev" style="width:18px"><use href="#i-chev"/></svg></div>
+   <div class="it" style="color:var(--bad)"><div class="ic" style="background:rgba(255,77,94,.12);color:var(--bad)"><svg class="ico" style="width:19px"><use href="#i-out"/></svg></div>Cerrar sesión</div>
+  </div>
+ </div>
+ <div class="tabbar glassbox" style="background:rgba(20,20,26,.82)"><div><svg><use href="#i-home"/></svg>Inicio</div><div><svg><use href="#i-grid"/></svg>Categorías</div><div><svg><use href="#i-cal"/></svg>Agenda</div><div class="on"><svg><use href="#i-user"/></svg>Perfil</div></div>
+</div></section>
+
+<!-- 11 Vincular TV -->
+<section id="p11" class="phone glow"><div class="grain"></div><div class="z">
+ <div class="sb"><span>9:41</span><i>●●● 5G ▮</i></div>
+ <div class="top"><div class="back glassbox" style="border-radius:13px"><svg class="ico"><use href="#i-back"/></svg></div><span style="font-weight:700">Vincular televisor</span><div style="width:40px"></div></div>
+ <div style="padding:0 22px;text-align:center">
+  <div style="margin:40px auto 22px;width:120px;height:88px;border-radius:16px;display:grid;place-items:center;color:var(--o2);position:relative" class="glassbox"><svg class="ico" style="width:56px;height:56px"><use href="#i-tv"/></svg><div style="position:absolute;inset:-20px;background:radial-gradient(circle,rgba(242,106,10,.35),transparent 65%);z-index:-1"></div></div>
+  <h1 style="font-size:25px;font-weight:900">Escribí el código del TV</h1>
+  <p class="mut" style="font-size:15px;margin:10px 0 28px;line-height:1.5">Aparece en la pantalla del televisor. También podés escanear el QR con la cámara.</p>
+  <div class="code"><div>K</div><div>7</div><div>M</div><div class="dash">–</div><div>4</div><div>Q</div><div class="cur"></div></div>
+  <p class="small mut" style="margin:18px 0 30px">El código vence en <b style="color:var(--o2)">4:32</b></p>
+  <div class="btn">Vincular este televisor</div>
+  <div class="glassbox row" style="gap:12px;padding:14px 16px;margin-top:22px;border-radius:16px;text-align:left">
+   <svg class="ico" style="color:var(--warn);flex:none"><use href="#i-alert"/></svg>
+   <span class="small mut" style="line-height:1.45">Tu cuenta funciona en un dispositivo a la vez. Al vincular el TV, se cierra la sesión en este celular.</span></div>
+ </div>
+</div></section>
+
+<!-- 12 Sesión abierta en otro dispositivo -->
+<section id="p12" class="phone glow"><div class="grain"></div><div class="z" style="filter:blur(1px)">
+ <div class="sb"><span>9:41</span><i>●●● 5G ▮</i></div>
+ <div class="top"><div class="l"><img src="../../../../assets/logo.png"><span class="brand">PARAGUAY PLAY <b>TV</b></span></div><div class="avatar">J</div></div>
+ <div style="padding:16px 20px 0"><div class="poster feat"><div class="art a2"></div><div class="shade"></div></div>
+  <div class="skel" style="height:20px;width:40%;margin:24px 0 14px"></div><div class="row" style="gap:12px"><div class="skel" style="height:96px;width:150px"></div><div class="skel" style="height:96px;width:150px"></div><div class="skel" style="height:96px;width:60px"></div></div></div>
+</div>
+ <div class="modal-bg"></div>
+ <div class="sheet glassbox" style="background:rgba(24,24,30,.92);border-radius:28px">
+  <div class="warnic"><svg class="ico" style="width:34px;height:34px"><use href="#i-phone"/></svg></div>
+  <h2 style="font-size:22px;font-weight:900">Tu cuenta ya está abierta</h2>
+  <p class="mut" style="font-size:14.5px;line-height:1.5;margin:10px 4px 20px">Hay una sesión activa en <b style="color:var(--t)">Smart TV · Living</b>. Tu plan permite un dispositivo a la vez.</p>
+  <div class="btn" style="margin-bottom:12px">Usar en este celular</div>
+  <div class="btn2">Cancelar</div>
+  <p class="small" style="color:var(--t3);margin-top:14px">La otra sesión se cerrará en menos de un minuto.</p>
+ </div>
+</section>
+
+<!-- ==================== TELEVISOR ==================== -->
+
+<!-- T1 Login TV -->
+<section id="t01" class="tv glow"><div class="grain"></div><div class="z" style="display:flex;height:100%;align-items:center;padding:0 140px;gap:120px">
+ <div style="flex:1">
+  <img src="../../../../assets/logo.png" style="width:150px;filter:drop-shadow(0 0 50px rgba(242,106,10,.55))">
+  <h1 class="brand" style="font-size:64px;margin:30px 0 14px">PARAGUAY PLAY <b>TV</b></h1>
+  <p class="mut" style="font-size:30px;line-height:1.4;max-width:720px">Iniciá sesión con tu celular. Es más rápido que escribir con el control.</p>
+  <div style="margin-top:56px">
+   <div class="row" style="gap:22px;font-size:26px;margin-bottom:24px"><b style="width:52px;height:52px;border-radius:50%;display:grid;place-items:center;background:var(--o);font-size:24px">1</b>Abrí la app en tu celular o escaneá el QR</div>
+   <div class="row" style="gap:22px;font-size:26px;margin-bottom:24px"><b style="width:52px;height:52px;border-radius:50%;display:grid;place-items:center;background:var(--o);font-size:24px">2</b>Andá a Perfil › Vincular un televisor</div>
+   <div class="row" style="gap:22px;font-size:26px"><b style="width:52px;height:52px;border-radius:50%;display:grid;place-items:center;background:var(--o);font-size:24px">3</b>Escribí este código</div>
+  </div>
+ </div>
+ <div class="glassbox" style="width:640px;padding:56px;border-radius:40px;text-align:center">
+  <canvas id="qr" width="300" height="300" style="width:300px;height:300px;background:#fff;border-radius:24px;padding:18px;box-shadow:0 0 0 8px rgba(242,106,10,.25),0 0 60px rgba(242,106,10,.35)"></canvas>
+  <div style="font-size:84px;font-weight:900;letter-spacing:14px;margin:38px 0 10px;text-shadow:0 0 30px rgba(242,106,10,.5)">K7M<span style="color:var(--o)">-</span>4QZ</div>
+  <div class="mut" style="font-size:24px">Vence en 4:32 · se renueva solo</div>
+  <div class="btn2 tvbtn tvf" style="margin-top:44px;transform:none">Usar correo y contraseña</div>
+ </div>
+</div></section>
+
+<!-- T2 Inicio TV -->
+<section id="t02" class="tv"><div class="tvhero"><div class="art a1" style="position:absolute;inset:0"></div><div class="fade"></div></div><div class="z">
+ <div class="tvtop"><div class="l"><img src="../../../../assets/logo.png"><span class="brand">PARAGUAY PLAY <b>TV</b></span></div>
+  <div class="tvnav"><div class="on"><svg class="ico" style="width:26px;height:26px"><use href="#i-home"/></svg>Inicio</div><div>Categorías</div><div>Agenda</div><div><svg class="ico" style="width:26px;height:26px"><use href="#i-search"/></svg></div></div>
+  <div class="tvuser"><span class="pill ok" style="font-size:17px"><span class="dot"></span>Activa · 18 días</span>Juan<div class="avatar">J</div></div></div>
+ <div style="padding:70px 96px 0;max-width:1000px">
+  <div class="row" style="gap:14px;margin-bottom:22px"><span class="live" style="font-size:17px;padding:8px 14px">EN VIVO</span><span class="soon" style="font-size:17px;padding:8px 14px">Deportes</span><span class="soon" style="font-size:17px;padding:8px 14px">2.340 viendo</span></div>
+  <h1 style="font-size:78px;font-weight:900;line-height:1.02;letter-spacing:-1px">Final Copa<br>Interbarrios 2026</h1>
+  <p class="mut" style="font-size:26px;margin:22px 0 34px;line-height:1.4">Los dos mejores equipos del torneo se enfrentan por el título.</p>
+  <div class="row" style="gap:22px"><div class="btn tvbtn tvf" style="transform:scale(1.06)"><svg class="ico" style="width:30px;height:30px"><use href="#i-play"/></svg>Ver en vivo</div><div class="btn2 tvbtn">Más información</div></div>
+ </div>
+ <div style="margin-top:56px">
+  <div class="tvsec"><span class="live" style="font-size:15px;padding:6px 12px">EN VIVO</span>Ahora</div>
+  <div class="tvrow">
+   <div class="tvcard"><div class="poster"><div class="art a2"></div><div class="shade"></div></div><h4>Festival de Polca y Guarania</h4><p>Música · San Bernardino</p></div>
+   <div class="tvcard"><div class="poster"><div class="art a3"></div><div class="shade"></div></div><h4>Culto de Domingo</h4><p>Religiosos · Asunción</p></div>
+   <div class="tvcard"><div class="poster"><div class="art a4"></div><div class="shade"></div></div><h4>Conferencia Tech Asunción</h4><p>Conferencias</p></div>
+   <div class="tvcard"><div class="poster"><div class="art a6"></div><div class="shade"></div></div><h4>Clásico de Futsal</h4><p>Deportes</p></div>
+  </div>
+ </div>
+ </div>
+ <div class="tvhint"><span><b>◀ ▶</b>Moverse</span><span><b>OK</b>Elegir</span><span><b>↩</b>Atrás</span></div>
+</section>
+
+<!-- T3 Fila con foco en tarjeta (Próximos) -->
+<section id="t03" class="tv glow"><div class="grain"></div><div class="z">
+ <div class="tvtop"><div class="l"><img src="../../../../assets/logo.png"><span class="brand">PARAGUAY PLAY <b>TV</b></span></div>
+  <div class="tvnav"><div class="on"><svg class="ico" style="width:26px;height:26px"><use href="#i-home"/></svg>Inicio</div><div>Categorías</div><div>Agenda</div><div><svg class="ico" style="width:26px;height:26px"><use href="#i-search"/></svg></div></div>
+  <div class="tvuser"><span class="pill ok" style="font-size:17px"><span class="dot"></span>Activa · 18 días</span>Juan<div class="avatar">J</div></div></div>
+ <div style="margin-top:44px">
+  <div class="tvsec"><span class="live" style="font-size:15px;padding:6px 12px">EN VIVO</span>Ahora</div>
+  <div class="tvrow" style="margin-bottom:46px">
+   <div class="tvcard"><div class="poster"><div class="art a1"></div><div class="shade"></div></div><h4>Final Copa Interbarrios</h4><p>Deportes</p></div>
+   <div class="tvcard"><div class="poster"><div class="art a2"></div><div class="shade"></div></div><h4>Festival de Polca y Guarania</h4><p>Música</p></div>
+   <div class="tvcard"><div class="poster"><div class="art a3"></div><div class="shade"></div></div><h4>Culto de Domingo</h4><p>Religiosos</p></div>
+   <div class="tvcard"><div class="poster"><div class="art a4"></div><div class="shade"></div></div><h4>Conferencia Tech</h4><p>Conferencias</p></div>
+  </div>
+  <div class="tvsec">Próximos</div>
+  <div class="tvrow" style="margin-bottom:46px">
+   <div class="tvcard"><div class="poster"><div class="art a5"></div><div class="shade"></div><div class="tag"><span class="soon" style="font-size:17px;padding:7px 12px">SÁB 28 · 20:00</span></div></div><h4>Noche de Rock Paraguayo</h4><p>Música</p></div>
+   <div class="tvcard" style="transform:scale(1.08);transform-origin:center top;position:relative;z-index:3"><div class="poster" style="outline:5px solid var(--o2);outline-offset:5px;box-shadow:0 0 0 14px rgba(242,106,10,.14),0 0 70px rgba(242,106,10,.6),0 30px 60px rgba(0,0,0,.6)"><div class="art a6"></div><div class="shade"></div><div class="tag"><span class="soon" style="font-size:17px;padding:7px 12px">DOM 29 · 18:00</span></div>
+    <div class="meta"><div class="row" style="gap:10px;font-size:17px;font-weight:700"><svg class="ico"><use href="#i-bell"/></svg>OK para recordarme</div></div></div><h4 style="color:var(--o2)">Clásico de Futsal</h4><p>Deportes · Luque</p></div>
+   <div class="tvcard"><div class="poster"><div class="art a4"></div><div class="shade"></div><div class="tag"><span class="soon" style="font-size:17px;padding:7px 12px">LUN 30 · 21:00</span></div></div><h4>Charla: Emprender en PY</h4><p>Conferencias</p></div>
+   <div class="tvcard"><div class="poster"><div class="art a3"></div><div class="shade"></div><div class="tag"><span class="soon" style="font-size:17px;padding:7px 12px">MAR 1 · 19:00</span></div></div><h4>Vigilia de Caacupé</h4><p>Religiosos</p></div>
+  </div>
+  <div class="tvsec">Categorías</div>
+  <div class="row" style="gap:20px;padding:0 96px">
+   <div class="chip" style="height:64px;padding:0 34px;font-size:22px">Deportes</div><div class="chip" style="height:64px;padding:0 34px;font-size:22px">Música</div><div class="chip" style="height:64px;padding:0 34px;font-size:22px">Religiosos</div><div class="chip" style="height:64px;padding:0 34px;font-size:22px">Conferencias</div><div class="chip" style="height:64px;padding:0 34px;font-size:22px">Fiestas patronales</div>
+  </div>
+ </div></div>
+ <div class="tvhint"><span><b>▲ ▼</b>Filas</span><span><b>◀ ▶</b>Moverse</span><span><b>OK</b>Elegir</span><span><b>↩</b>Atrás</span></div>
+</section>
+
+<!-- T4 Reproductor TV -->
+<section id="t04" class="tv"><div class="player">
+  <svg class="field-lines" viewBox="0 0 1920 1080" preserveAspectRatio="none"><g stroke="#fff" stroke-width="3" fill="none"><rect x="90" y="80" width="1740" height="920"/><line x1="960" y1="80" x2="960" y2="1000"/><circle cx="960" cy="540" r="150"/><rect x="90" y="300" width="220" height="480"/><rect x="1610" y="300" width="220" height="480"/></g></svg>
+  <div class="wm" style="left:1240px;top:640px;font-size:26px">ID 48213 · juan.b</div>
+  <div class="ctrl"></div>
+  <div style="position:absolute;top:56px;left:96px;right:96px" class="row"><img src="../../../../assets/logo.png" style="width:60px"><div style="margin-left:22px"><div style="font-weight:900;font-size:38px">Final Copa Interbarrios 2026</div><div class="mut" style="font-size:22px;margin-top:4px">Deportes · Estadio Municipal</div></div><span class="live" style="margin-left:auto;font-size:18px;padding:9px 16px">EN VIVO</span></div>
+  <div style="position:absolute;left:96px;right:96px;bottom:70px">
+   <div class="bar" style="height:8px;margin-bottom:36px"><i></i></div>
+   <div class="row" style="gap:22px">
+    <div class="bigplay tvf" style="width:96px;height:96px;transform:scale(1.06)"><svg class="ico" style="width:40px;height:40px;color:#fff"><use href="#i-pause"/></svg></div>
+    <div class="btn2" style="height:76px;padding:0 30px;font-size:22px;border-radius:20px"><svg class="ico"><use href="#i-refresh"/></svg>Recargar</div>
+    <div style="margin-left:auto;font-size:22px;font-weight:700;color:var(--t2);margin-right:8px">Servidor</div>
+    <div class="srv" style="gap:14px"><div class="on" style="font-size:22px;padding:20px 28px;border-radius:16px">Servidor 1 HD</div><div style="font-size:22px;padding:20px 28px;border-radius:16px">Servidor 2</div></div>
+   </div>
+  </div>
+</div></section>
+
+<!-- T5 Planes TV (cuenta vencida) -->
+<section id="t05" class="tv glow"><div class="grain"></div><div class="z">
+ <div class="tvtop"><div class="l"><img src="../../../../assets/logo.png"><span class="brand">PARAGUAY PLAY <b>TV</b></span></div><div class="tvuser"><span class="pill bad" style="font-size:17px"><span class="dot"></span>Plan vencido</span>Juan<div class="avatar">J</div></div></div>
+ <div style="text-align:center;margin-top:80px">
+  <h1 style="font-size:64px;font-weight:900">Tu plan venció</h1>
+  <p class="mut" style="font-size:28px;margin-top:14px">Elegí un plan para seguir viendo. Lo pagás desde el celular.</p>
+ </div>
+ <div class="row" style="gap:48px;justify-content:center;margin-top:80px">
+  <div class="glassbox plan" style="width:470px;padding:44px;border-radius:32px;text-align:center"><div style="font-size:30px;font-weight:800">Semanal</div><div class="pr" style="font-size:56px;margin:18px 0 6px">Gs 5.000</div><div class="mut" style="font-size:22px">7 días</div></div>
+  <div class="glassbox plan sel" style="width:470px;padding:44px;border-radius:32px;text-align:center;transform:scale(1.08);outline:5px solid var(--o2);outline-offset:6px;box-shadow:0 0 80px rgba(242,106,10,.45)"><div class="badge" style="font-size:16px;padding:8px 16px;right:auto;left:50%;transform:translateX(-50%);top:-18px">MÁS ELEGIDO</div><div style="font-size:30px;font-weight:800">Mensual</div><div class="pr" style="font-size:56px;margin:18px 0 6px">Gs 20.000</div><div class="mut" style="font-size:22px">1 mes</div></div>
+  <div class="glassbox plan" style="width:470px;padding:44px;border-radius:32px;text-align:center"><div style="font-size:30px;font-weight:800">Anual</div><div class="pr" style="font-size:56px;margin:18px 0 6px">Gs 240.000</div><div class="mut" style="font-size:22px">1 año</div></div>
+ </div>
+ <p class="mut" style="text-align:center;font-size:24px;margin-top:80px">Al elegir, te mostramos un QR para pagar y mandar el comprobante desde tu celular.</p>
+ </div>
+ <div class="tvhint"><span><b>◀ ▶</b>Moverse</span><span><b>OK</b>Elegir</span></div>
+</section>
+
+<!-- T6 Perfil TV -->
+<section id="t06" class="tv glow"><div class="grain"></div><div class="z">
+ <div class="tvtop"><div class="l"><img src="../../../../assets/logo.png"><span class="brand">PARAGUAY PLAY <b>TV</b></span></div>
+  <div class="tvnav"><div>Inicio</div><div>Categorías</div><div>Agenda</div><div class="on"><svg class="ico" style="width:26px;height:26px"><use href="#i-user"/></svg>Perfil</div></div><div style="width:200px"></div></div>
+ <div class="row" style="gap:60px;padding:90px 140px 0;align-items:flex-start">
+  <div class="glassbox" style="width:760px;padding:52px;border-radius:36px;background:linear-gradient(160deg,rgba(242,106,10,.2),rgba(255,255,255,.03) 60%)">
+   <div class="row" style="gap:26px"><div class="avatar" style="width:96px;height:96px;font-size:40px">J</div><div><div style="font-weight:900;font-size:40px">Juan Benítez</div><div class="mut" style="font-size:24px;margin-top:4px">juan.benitez@gmail.com</div></div></div>
+   <div class="hr" style="margin:36px 0"></div>
+   <div class="row" style="gap:40px"><div class="ring" style="width:180px;height:180px"><div style="width:148px;height:148px"><b style="font-size:56px">18</b><span style="font-size:18px">DÍAS</span></div></div>
+    <div><span class="pill ok" style="font-size:20px;padding:10px 18px"><span class="dot"></span>Activa</span><div style="font-weight:900;font-size:36px;margin-top:16px">Plan Mensual</div><div class="mut" style="font-size:24px;margin-top:6px">Vence el 10 de diciembre</div></div></div>
+  </div>
+  <div style="flex:1;display:flex;flex-direction:column;gap:24px">
+   <div class="btn tvbtn tvf" style="justify-content:flex-start;transform:scale(1.04)"><svg class="ico" style="width:30px;height:30px"><use href="#i-refresh"/></svg>Renovar plan</div>
+   <div class="btn2 tvbtn" style="justify-content:flex-start"><svg class="ico" style="width:30px;height:30px"><use href="#i-swap"/></svg>Cambiar de plan</div>
+   <div class="btn2 tvbtn" style="justify-content:flex-start"><svg class="ico" style="width:30px;height:30px"><use href="#i-hist"/></svg>Historial</div>
+   <div class="btn2 tvbtn" style="justify-content:flex-start"><svg class="ico" style="width:30px;height:30px"><use href="#i-help"/></svg>Ayuda</div>
+   <div class="btn2 tvbtn" style="justify-content:flex-start;color:var(--bad)"><svg class="ico" style="width:30px;height:30px"><use href="#i-out"/></svg>Cerrar sesión en este TV</div>
+  </div>
+ </div></div>
+ <div class="tvhint"><span><b>▲ ▼</b>Moverse</span><span><b>OK</b>Elegir</span><span><b>↩</b>Atrás</span></div>
+</section>
+
+<script>
+const id=location.hash.slice(1)||'p01';
+document.getElementById(id).classList.add('on');
+// QR de muestra (patrón decorativo, no escaneable)
+const c=document.getElementById('qr');if(c){const x=c.getContext('2d'),n=29,s=264/n;x.fillStyle='#fff';x.fillRect(0,0,300,300);x.translate(0,0);
+ let seed=7;const r=()=>(seed=(seed*9301+49297)%233280)/233280;
+ x.fillStyle='#111';for(let i=0;i<n;i++)for(let j=0;j<n;j++){const f=(i<8&&j<8)||(i<8&&j>n-9)||(i>n-9&&j<8);if(!f&&r()>.52)x.fillRect(i*s,j*s,s,s)}
+ const fp=(a,b)=>{x.fillStyle='#111';x.fillRect(a*s,b*s,7*s,7*s);x.fillStyle='#fff';x.fillRect((a+1)*s,(b+1)*s,5*s,5*s);x.fillStyle='#F26A0A';x.fillRect((a+2)*s,(b+2)*s,3*s,3*s)};
+ fp(0,0);fp(n-7,0);fp(0,n-7);
+ const img=new Image();img.onload=()=>{x.fillStyle='#fff';x.fillRect(132-26,132-26,52,52);x.drawImage(img,132-24,132-24,48,48)};img.src="../../../../assets/logo.png";}
+</script>
+</body></html>
