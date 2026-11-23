@@ -18,7 +18,7 @@ describe('api', () => {
   });
   test('422 trae el mensaje del servidor', async () => {
     mockApi([{ method: 'POST', path: '/api/auth/login', status: 422, body: { code: 'invalid_credentials', message: 'Correo o contraseña incorrectos.' } }]);
-    const e = await api('/auth/login', { method: 'POST', body: {} }).catch((x: any) => x);
+    const e: any = await api('/auth/login', { method: 'POST', body: {} }).catch((x: any) => x);
     expect(e).toBeInstanceOf(ApiError);
     expect(e.status).toBe(422);
     expect(e.code).toBe('invalid_credentials');
@@ -26,7 +26,7 @@ describe('api', () => {
   });
   test('429 sin cuerpo da el texto de demasiados intentos', async () => {
     mockApi([{ method: 'POST', path: '/api/auth/login', status: 429 }]);
-    const e = await api('/auth/login', { method: 'POST', body: {} }).catch((x: any) => x);
+    const e: any = await api('/auth/login', { method: 'POST', body: {} }).catch((x: any) => x);
     expect(e.message).toBe(TOO_MANY_MSG);
     expect(TOO_MANY_MSG).toBe('Demasiados intentos. Esperá un minuto e intentá de nuevo.');
   });
@@ -39,7 +39,7 @@ describe('api', () => {
   });
   test('fallo de red da el texto de red', async () => {
     mockApi([{ path: '/api/plans', networkError: true }]);
-    const e = await api('/plans').catch((x: any) => x);
+    const e: any = await api('/plans').catch((x: any) => x);
     expect(e.message).toBe(NETWORK_MSG);
     expect(NETWORK_MSG).toBe('No pudimos conectar. Revisá tu internet e intentá de nuevo.');
   });
