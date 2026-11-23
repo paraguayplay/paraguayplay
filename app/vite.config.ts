@@ -6,5 +6,5 @@ export default defineConfig({
   plugins: [react()],
   server: { proxy: { '/api': 'http://127.0.0.1:8000', '/storage': 'http://127.0.0.1:8000' } },
   build: { target: ['es2019'], sourcemap: false },
-  test: { environment: 'jsdom', globals: true, setupFiles: ['./test/setup.ts'], css: false },
+  test: { env: { TZ: 'UTC' }, environment: 'jsdom', globals: true, setupFiles: ['./test/setup.ts'], css: false },
 });
