@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="es"><head><meta charset="utf-8"><link rel="stylesheet" href="../maquetas-app/style.css">
+<style>
+section{display:none;position:relative;overflow:hidden;background:var(--bg)}
+section.on{display:block}
+.desk{width:1440px;height:900px}
+.phone{width:390px;height:844px}
+.adm{display:flex;height:100%}
+.side{width:248px;flex:none;padding:26px 16px;border-right:1px solid var(--gb);background:rgba(255,255,255,.02);display:flex;flex-direction:column;position:relative;z-index:2}
+.side .brand{font-size:14px}
+.side .tag{font-size:10px;font-weight:800;letter-spacing:2px;color:var(--o2);margin:4px 0 0 44px}
+.nav{margin-top:28px;display:flex;flex-direction:column;gap:4px}
+.nav a{display:flex;align-items:center;gap:12px;height:44px;padding:0 14px;border-radius:12px;font-size:14px;font-weight:600;color:var(--t2)}
+.nav a.on{background:linear-gradient(90deg,rgba(242,106,10,.22),rgba(242,106,10,.04));color:#fff;box-shadow:inset 2px 0 0 var(--o)}
+.nav a .ico{width:20px;height:20px}
+.nav .cnt{margin-left:auto;background:var(--o);color:#fff;font-size:11px;font-weight:800;min-width:22px;height:22px;border-radius:11px;display:grid;place-items:center;padding:0 6px;box-shadow:0 0 12px rgba(242,106,10,.6)}
+.side .me{margin-top:auto;display:flex;align-items:center;gap:10px;padding:12px;border-radius:14px}
+.main{flex:1;min-width:0;padding:28px 36px;position:relative;z-index:1;overflow:hidden}
+.ph{display:flex;align-items:center;justify-content:space-between;margin-bottom:22px}
+.ph h1{font-size:26px;font-weight:900}
+.ph p{font-size:13px;color:var(--t2);margin-top:4px}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:22px}
+.stat{padding:18px 20px;border-radius:18px}
+.stat b{display:block;font-size:30px;font-weight:900;margin-top:6px;letter-spacing:-.5px}
+.stat span{font-size:12px;color:var(--t2);font-weight:600}
+.stat.hot{background:linear-gradient(160deg,rgba(242,106,10,.22),rgba(255,255,255,.03));border-color:rgba(242,106,10,.4)}
+table{width:100%;border-collapse:collapse;font-size:13.5px}
+th{text-align:left;font-size:11px;letter-spacing:1px;color:var(--t3);font-weight:800;padding:12px 16px;border-bottom:1px solid var(--gb)}
+td{padding:13px 16px;border-bottom:1px solid rgba(255,255,255,.05);vertical-align:middle}
+tr.hi td{background:rgba(242,106,10,.06)}
+.who b{display:block;font-weight:700}
+.who span{font-size:12px;color:var(--t2)}
+.sm{height:34px;padding:0 14px;font-size:13px;border-radius:10px;width:auto;display:inline-flex}
+.btn.sm{box-shadow:inset 0 1px 0 rgba(255,255,255,.4),0 3px 0 var(--o3),0 8px 18px rgba(242,106,10,.3)}
+.btn2.sm{box-shadow:inset 0 1px 0 rgba(255,255,255,.12),0 3px 0 rgba(0,0,0,.45)}
+.ghost{height:34px;padding:0 12px;border-radius:10px;display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:600;color:var(--t2);border:1px solid var(--gb)}
+.danger{color:var(--bad);border-color:rgba(255,77,94,.35)}
+.tools{display:flex;gap:10px;align-items:center;margin-bottom:16px}
+.search{height:42px;border-radius:12px;background:rgba(255,255,255,.04);border:1px solid var(--gb);display:flex;align-items:center;gap:10px;padding:0 14px;color:var(--t3);font-size:13.5px;width:320px}
+.search .ico{width:18px;height:18px}
+.chip{height:34px;font-size:13px;padding:0 14px}
+.chip .n{background:rgba(255,255,255,.12);border-radius:8px;padding:1px 7px;font-size:11px;margin-left:2px}
+.chip.on .n{background:rgba(0,0,0,.2)}
+.modal-bg{position:absolute;inset:0;background:rgba(0,0,0,.6);backdrop-filter:blur(4px);z-index:5}
+.modal{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:520px;padding:28px;z-index:6;border-radius:24px;background:rgba(24,24,30,.95)}
+.modal h2{font-size:20px;font-weight:900;margin-bottom:4px}
+.dl{display:grid;grid-template-columns:150px 1fr;gap:10px 16px;font-size:14px;margin:18px 0}
+.dl span{color:var(--t2)}
+.form{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.form .full{grid-column:1/-1}
+textarea.ta{width:100%;min-height:86px;border-radius:14px;background:rgba(255,255,255,.04);border:1px solid var(--gb);color:var(--t);font:inherit;font-size:14px;padding:12px 14px;resize:none}
+.sw{width:42px;height:24px;border-radius:12px;background:rgba(255,255,255,.15);position:relative;flex:none}
+.sw::after{content:"";position:absolute;top:3px;left:3px;width:18px;height:18px;border-radius:50%;background:#fff;transition:.2s}
+.sw.on{background:var(--o);box-shadow:0 0 12px rgba(242,106,10,.5)}
+.sw.on::after{left:21px}
+.lk{display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:14px;margin-bottom:10px}
+.lk .drag{color:var(--t3);cursor:grab}
+.lk .t{font-size:11px;font-weight:800;padding:3px 8px;border-radius:6px;background:rgba(255,255,255,.08);letter-spacing:1px}
+.lk .u{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--t2);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex:1;min-width:0}
+.pv{height:190px;border-radius:16px;margin-bottom:14px}
+.ev td .poster{width:92px;height:52px;border-radius:10px}
+.star{color:#FFC23D}
+.kv2{display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px dashed rgba(255,255,255,.08);font-size:13.5px}
+.kv2 span{color:var(--t2)}
+.bar2{height:8px;border-radius:4px;background:rgba(255,255,255,.08);overflow:hidden}
+.bar2 i{display:block;height:100%;background:linear-gradient(90deg,var(--o),#E11D2E)}
+.mono{font-family:'JetBrains Mono',monospace;font-size:12.5px}
+.testbox{border-radius:18px;overflow:hidden;position:relative;height:300px;background:#000}
+.mtop{display:flex;align-items:center;justify-content:space-between;padding:6px 18px 0}
+.mcard{padding:16px;border-radius:18px;margin-bottom:12px}
+.avatar{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;font-weight:800;font-size:15px;background:linear-gradient(135deg,#2A2A33,#17171D);border:1px solid var(--gb);box-shadow:0 0 0 2px rgba(242,106,10,.6)}
+.back{width:40px;height:40px;border-radius:13px;display:grid;place-items:center}
+</style></head>
+<body>
+<svg width="0" height="0" style="position:absolute">
+ <defs>
+  <symbol id="i-mail" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="m4 7 8 6 8-6"/></symbol>
+  <symbol id="i-lock" viewBox="0 0 24 24"><rect x="4" y="10" width="16" height="11" rx="3"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></symbol>
+  <symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c1-4 4.5-6 8-6s7 2 8 6"/></symbol>
+  <symbol id="i-phone" viewBox="0 0 24 24"><rect x="6" y="2" width="12" height="20" rx="3"/><path d="M11 18h2"/></symbol>
+  <symbol id="i-eye" viewBox="0 0 24 24"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></symbol>
+  <symbol id="i-home" viewBox="0 0 24 24"><path d="M3 11 12 4l9 7v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1Z"/></symbol>
+  <symbol id="i-grid" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="2"/><rect x="14" y="3" width="7" height="7" rx="2"/><rect x="3" y="14" width="7" height="7" rx="2"/><rect x="14" y="14" width="7" height="7" rx="2"/></symbol>
+  <symbol id="i-cal" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M3 10h18M8 3v4M16 3v4"/></symbol>
+  <symbol id="i-tv" viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="13" rx="3"/><path d="M8 21h8M12 18v3"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></symbol>
+  <symbol id="i-back" viewBox="0 0 24 24"><path d="M15 5 8 12l7 7"/></symbol>
+  <symbol id="i-chev" viewBox="0 0 24 24"><path d="m9 5 7 7-7 7"/></symbol>
+  <symbol id="i-play" viewBox="0 0 24 24"><path d="M7 4.5v15l13-7.5Z" fill="currentColor" stroke="none"/></symbol>
+  <symbol id="i-pause" viewBox="0 0 24 24"><rect x="6" y="4" width="4" height="16" rx="1" fill="currentColor" stroke="none"/><rect x="14" y="4" width="4" height="16" rx="1" fill="currentColor" stroke="none"/></symbol>
+  <symbol id="i-copy" viewBox="0 0 24 24"><rect x="8" y="8" width="13" height="13" rx="3"/><path d="M16 8V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h3"/></symbol>
+  <symbol id="i-wa" viewBox="0 0 24 24"><path d="M4 20l1.3-4A8 8 0 1 1 8 19Z"/><path d="M9 9.5c.3 2 2.2 4.2 4.6 4.8l1.2-1.2 1.8.9-.4 1.6c-3.6.4-7.6-3.3-7.6-7.2l1.6-.4.9 1.8Z" fill="currentColor" stroke="none"/></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+  <symbol id="i-bell" viewBox="0 0 24 24"><path d="M6 16V11a6 6 0 0 1 12 0v5l2 2H4Z"/><path d="M10 21h4"/></symbol>
+  <symbol id="i-cast" viewBox="0 0 24 24"><path d="M2 8V6a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-6"/><path d="M2 12a8 8 0 0 1 8 8M2 16a4 4 0 0 1 4 4"/><circle cx="2.5" cy="19.5" r=".5"/></symbol>
+  <symbol id="i-full" viewBox="0 0 24 24"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></symbol>
+  <symbol id="i-vol" viewBox="0 0 24 24"><path d="M4 9h4l5-4v14l-5-4H4Z"/><path d="M16 9a4 4 0 0 1 0 6M19 6a8 8 0 0 1 0 12"/></symbol>
+  <symbol id="i-refresh" viewBox="0 0 24 24"><path d="M20 11a8 8 0 1 0-2.3 5.7M20 4v7h-7"/></symbol>
+  <symbol id="i-key" viewBox="0 0 24 24"><circle cx="8" cy="15" r="4"/><path d="m11 12 9-9M17 6l3 3"/></symbol>
+  <symbol id="i-out" viewBox="0 0 24 24"><path d="M15 4h3a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-3M10 8l-4 4 4 4M6 12h10"/></symbol>
+  <symbol id="i-hist" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5M12 7v5l3 2"/></symbol>
+  <symbol id="i-swap" viewBox="0 0 24 24"><path d="M4 8h14l-4-4M20 16H6l4 4"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12 5 5 9-10"/></symbol>
+  <symbol id="i-alert" viewBox="0 0 24 24"><path d="M12 3 2 20h20Z"/><path d="M12 10v4M12 17h.01"/></symbol>
+  <symbol id="i-help" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9.5 9a2.5 2.5 0 1 1 3.5 2.3c-.6.3-1 .9-1 1.7M12 17h.01"/></symbol>
+  <symbol id="i-share" viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="m8.6 13.5 6.8 4M15.4 6.5l-6.8 4"/></symbol>
+ </defs>
+</svg>
+<svg width="0" height="0" style="position:absolute"><defs>
+ <symbol id="i-users" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c.8-3.5 3.5-5.5 6.5-5.5s5.7 2 6.5 5.5"/><circle cx="17" cy="9" r="2.8"/><path d="M16 14.6c2.6.2 4.8 1.9 5.5 5"/></symbol>
+ <symbol id="i-inbox" viewBox="0 0 24 24"><path d="M3 13l2.5-8h13L21 13v6a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1Z"/><path d="M3 13h5l1.5 3h5L16 13h5"/></symbol>
+ <symbol id="i-film" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="3"/><path d="M7 4v16M17 4v16M3 9h4M3 15h4M17 9h4M17 15h4"/></symbol>
+ <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3 4 6v6c0 4.5 3.4 8 8 9 4.6-1 8-4.5 8-9V6Z"/><path d="M12 8v5M12 16h.01"/></symbol>
+ <symbol id="i-gear" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1Z"/></symbol>
+ <symbol id="i-tag" viewBox="0 0 24 24"><path d="M3 12V4h8l10 10-8 8Z"/><circle cx="7.5" cy="8.5" r="1.5"/></symbol>
+ <symbol id="i-edit" viewBox="0 0 24 24"><path d="M4 20h4L19 9l-4-4L4 16Z"/><path d="m13.5 6.5 4 4"/></symbol>
+ <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+ <symbol id="i-drag" viewBox="0 0 24 24"><circle cx="9" cy="6" r="1" fill="currentColor"/><circle cx="15" cy="6" r="1" fill="currentColor"/><circle cx="9" cy="12" r="1" fill="currentColor"/><circle cx="15" cy="12" r="1" fill="currentColor"/><circle cx="9" cy="18" r="1" fill="currentColor"/><circle cx="15" cy="18" r="1" fill="currentColor"/></symbol>
+ <symbol id="i-trash" viewBox="0 0 24 24"><path d="M4 7h16M10 11v6M14 11v6M6 7l1 13h10l1-13M9 7V4h6v3"/></symbol>
+ <symbol id="i-upload" viewBox="0 0 24 24"><path d="M12 16V4M7 9l5-5 5 5M4 16v4h16v-4"/></symbol>
+ <symbol id="i-star" viewBox="0 0 24 24"><path d="m12 3 2.8 5.7 6.2.9-4.5 4.4 1 6.2L12 17.3 6.5 20.2l1-6.2L3 9.6l6.2-.9Z"/></symbol>
+ <symbol id="i-x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></symbol>
+</defs></svg>
+
+<!-- reutilizable: barra lateral -->
+<template id="side"><aside class="side">
+ <div class="row" style="gap:10px"><img src="../../../../assets/logo.png" style="width:34px"><span class="brand">PARAGUAY PLAY <b>TV</b></span></div>
+ <div class="tag">PANEL</div>
+ <nav class="nav">
+  <a data-k="sol"><svg class="ico"><use href="#i-inbox"/></svg>Solicitudes<span class="cnt">4</span></a>
+  <a data-k="usr"><svg class="ico"><use href="#i-users"/></svg>Usuarios</a>
+  <a data-k="evt"><svg class="ico"><use href="#i-film"/></svg>Eventos</a>
+  <a data-k="seg"><svg class="ico"><use href="#i-shield"/></svg>Seguridad<span class="cnt" style="background:#E11D2E;box-shadow:0 0 12px rgba(225,29,46,.6)">2</span></a>
+  <a data-k="pla"><svg class="ico"><use href="#i-tag"/></svg>Planes</a>
+  <a data-k="cfg"><svg class="ico"><use href="#i-gear"/></svg>Configuración</a>
+ </nav>
+ <div class="me glassbox"><div class="avatar" style="width:34px;height:34px;font-size:13px">M</div><div><div style="font-weight:700;font-size:13px">Administrador</div><div class="small mut" style="font-size:11px">Cerrar sesión</div></div></div>
+</aside></template>
+
+<!-- A1 Solicitudes -->
+<section id="a01" class="desk glow" data-nav="sol"><div class="grain"></div><div class="adm">
+ <div class="main">
+  <div class="ph"><div><h1>Solicitudes de plan</h1><p>Revisá el pago en tu banco y aprobá. La cuenta se activa sola.</p></div><div class="ghost"><svg class="ico" style="width:16px"><use href="#i-refresh"/></svg>Actualizar</div></div>
+  <div class="stats">
+   <div class="glassbox stat hot"><span>Pendientes</span><b>4</b></div>
+   <div class="glassbox stat"><span>Cuentas activas</span><b>186</b></div>
+   <div class="glassbox stat"><span>Vencen en 3 días</span><b style="color:var(--warn)">12</b></div>
+   <div class="glassbox stat"><span>Usuarios pendientes</span><b>9</b></div>
+  </div>
+  <div class="tools"><div class="chip on">Pendientes <span class="n">4</span></div><div class="chip">Aprobadas</div><div class="chip">Rechazadas</div><div class="chip">Todas</div></div>
+  <div class="glassbox" style="border-radius:20px;overflow:hidden">
+  <table>
+   <tr><th>N.º</th><th>USUARIO</th><th>PLAN</th><th>MONTO</th><th>PEDIDO</th><th>ESTADO DE LA CUENTA</th><th style="text-align:right">ACCIONES</th></tr>
+   <tr class="hi"><td class="mono">128</td><td class="who"><b>Juan Benítez</b><span>juan.benitez@gmail.com · 0981 234 567</span></td><td>Mensual</td><td><b>Gs 20.000</b></td><td class="mut">Hace 12 min</td><td><span class="pill warn"><span class="dot"></span>Pendiente</span></td><td style="text-align:right"><span class="ghost danger" style="margin-right:6px">Rechazar</span><span class="btn sm">Aprobar</span></td></tr>
+   <tr><td class="mono">127</td><td class="who"><b>María López</b><span>marialopez@hotmail.com · 0971 555 210</span></td><td>Anual</td><td><b>Gs 240.000</b></td><td class="mut">Hace 40 min</td><td><span class="pill ok"><span class="dot"></span>Activa · 6 días</span></td><td style="text-align:right"><span class="ghost danger" style="margin-right:6px">Rechazar</span><span class="btn sm">Aprobar</span></td></tr>
+   <tr><td class="mono">125</td><td class="who"><b>Carlos Giménez</b><span>cgimenez@gmail.com · 0985 300 100</span></td><td>Semanal</td><td><b>Gs 5.000</b></td><td class="mut">Hoy 08:15</td><td><span class="pill bad"><span class="dot"></span>Vencida</span></td><td style="text-align:right"><span class="ghost danger" style="margin-right:6px">Rechazar</span><span class="btn sm">Aprobar</span></td></tr>
+   <tr><td class="mono">124</td><td class="who"><b>Ana Duarte</b><span>anaduarte@gmail.com · 0991 777 888</span></td><td>Mensual</td><td><b>Gs 20.000</b></td><td class="mut">Ayer 21:40</td><td><span class="pill warn"><span class="dot"></span>Pendiente</span></td><td style="text-align:right"><span class="ghost danger" style="margin-right:6px">Rechazar</span><span class="btn sm">Aprobar</span></td></tr>
+  </table></div>
+ </div>
+</div></section>
+
+<!-- A2 Aprobar (modal) -->
+<section id="a02" class="desk glow" data-nav="sol" data-base="a01"><div class="grain"></div>
+ <div class="modal-bg"></div>
+ <div class="modal glassbox">
+  <div class="row" style="justify-content:space-between"><h2>Aprobar solicitud N.º 128</h2><svg class="ico" style="color:var(--t3)"><use href="#i-x"/></svg></div>
+  <p class="small mut">Confirmá que la transferencia llegó antes de aprobar.</p>
+  <div class="dl">
+   <span>Usuario</span><b>Juan Benítez</b>
+   <span>Plan</span><b>Mensual · 30 días</b>
+   <span>Monto</span><b style="color:var(--o2)">Gs 20.000</b>
+   <span>Vence ahora</span><b class="mut">Sin plan (cuenta nueva)</b>
+  </div>
+  <div class="lbl">Nuevo vencimiento</div>
+  <div class="field f" style="color:var(--t)"><svg><use href="#i-cal"/></svg>23/12/2026 · 01:05</div>
+  <p class="small mut" style="margin:8px 4px 20px">Calculado: desde hoy + 30 días. Podés cambiarlo.</p>
+  <div class="lbl">Nota (opcional)</div>
+  <textarea class="ta" placeholder="Ej.: transferencia Banco Continental, ref. 55123"></textarea>
+  <div class="row" style="gap:12px;margin-top:22px"><div class="btn2" style="flex:1">Cancelar</div><div class="btn" style="flex:2"><svg class="ico" style="width:18px"><use href="#i-check"/></svg>Aprobar y activar</div></div>
+ </div>
+</section>
+
+<!-- A3 Usuarios -->
+<section id="a03" class="desk glow" data-nav="usr"><div class="grain"></div><div class="adm">
+ <div class="main">
+  <div class="ph"><div><h1>Usuarios</h1><p>214 cuentas</p></div></div>
+  <div class="tools">
+   <div class="search"><svg class="ico"><use href="#i-search"/></svg>Buscar por nombre, correo o teléfono</div>
+   <div class="chip on">Todos</div><div class="chip">Pendientes <span class="n">9</span></div><div class="chip">Activos <span class="n">186</span></div><div class="chip">Vencidos <span class="n">15</span></div><div class="chip">Vencen en 3 días <span class="n">12</span></div><div class="chip">Suspendidos <span class="n">4</span></div>
+  </div>
+  <div class="glassbox" style="border-radius:20px;overflow:hidden">
+  <table>
+   <tr><th>USUARIO</th><th>TELÉFONO</th><th>ESTADO</th><th>PLAN</th><th>VENCE</th><th>DISPOSITIVO</th><th></th></tr>
+   <tr class="hi"><td class="who"><b>Juan Benítez</b><span>juan.benitez@gmail.com</span></td><td class="mono">0981 234 567</td><td><span class="pill ok"><span class="dot"></span>Activa</span></td><td>Mensual</td><td>10/12/2026 <span class="small mut">· 18 días</span></td><td class="mut">Smart TV · Samsung</td><td style="text-align:right"><svg class="ico" style="color:var(--t3)"><use href="#i-chev"/></svg></td></tr>
+   <tr><td class="who"><b>María López</b><span>marialopez@hotmail.com</span></td><td class="mono">0971 555 210</td><td><span class="pill ok"><span class="dot"></span>Activa</span></td><td>Anual</td><td>29/11/2026 <span class="small" style="color:var(--warn)">· 6 días</span></td><td class="mut">iPhone · Safari</td><td style="text-align:right"><svg class="ico" style="color:var(--t3)"><use href="#i-chev"/></svg></td></tr>
+   <tr><td class="who"><b>Pedro Ramírez</b><span>pedro.r@gmail.com</span></td><td class="mono">0982 111 222</td><td><span class="pill warn"><span class="dot"></span>Pendiente</span></td><td class="mut">—</td><td class="mut">—</td><td class="mut">Android · Chrome</td><td style="text-align:right"><svg class="ico" style="color:var(--t3)"><use href="#i-chev"/></svg></td></tr>
+   <tr><td class="who"><b>Carlos Giménez</b><span>cgimenez@gmail.com</span></td><td class="mono">0985 300 100</td><td><span class="pill bad"><span class="dot"></span>Vencida</span></td><td>Semanal</td><td>20/11/2026</td><td class="mut">—</td><td style="text-align:right"><svg class="ico" style="color:var(--t3)"><use href="#i-chev"/></svg></td></tr>
+   <tr><td class="who"><b>Lucía Fernández</b><span>luciaf@gmail.com</span></td><td class="mono">0994 456 789</td><td><span class="pill ok"><span class="dot"></span>Activa</span></td><td>Mensual</td><td>25/11/2026 <span class="small" style="color:var(--bad)">· 2 días</span></td><td class="mut">Fire TV</td><td style="text-align:right"><svg class="ico" style="color:var(--t3)"><use href="#i-chev"/></svg></td></tr>
+   <tr><td class="who"><b>Roberto Acosta</b><span>racosta@yahoo.com</span></td><td class="mono">0975 909 090</td><td><span class="pill bad"><span class="dot"></span>Suspendida</span></td><td>Mensual</td><td>30/11/2026</td><td class="mut">—</td><td style="text-align:right"><svg class="ico" style="color:var(--t3)"><use href="#i-chev"/></svg></td></tr>
+  </table></div>
+  <div class="row small mut" style="justify-content:space-between;margin-top:14px"><span>Mostrando 1–25 de 214</span><div class="row" style="gap:8px"><span class="ghost">Anterior</span><span class="ghost">Siguiente</span></div></div>
+ </div>
+</div></section>
+
+<!-- A4 Detalle de usuario -->
+<section id="a04" class="desk glow" data-nav="usr"><div class="grain"></div><div class="adm">
+ <div class="main">
+  <div class="ph"><div class="row" style="gap:14px"><div class="back glassbox" style="border-radius:13px"><svg class="ico"><use href="#i-back"/></svg></div><div class="avatar" style="width:52px;height:52px;font-size:20px">J</div><div><h1>Juan Benítez</h1><p>juan.benitez@gmail.com · 0981 234 567 · cliente desde 03/11/2026</p></div></div>
+   <div class="row" style="gap:10px"><a class="ghost" style="color:#2BD47D;border-color:rgba(43,212,125,.35)"><svg class="ico" style="width:16px"><use href="#i-wa"/></svg>WhatsApp</a><span class="ghost danger">Suspender</span></div></div>
+  <div style="display:grid;grid-template-columns:420px 1fr;gap:20px">
+   <div>
+    <div class="glassbox" style="padding:22px;border-radius:20px;margin-bottom:16px">
+     <div class="row" style="justify-content:space-between;margin-bottom:14px"><b style="font-size:16px">Suscripción</b><span class="pill ok"><span class="dot"></span>Activa</span></div>
+     <div class="lbl">Estado</div>
+     <div class="row" style="gap:8px;margin-bottom:16px"><div class="chip">Pendiente</div><div class="chip on">Activa</div><div class="chip">Suspendida</div></div>
+     <div class="lbl">Vence</div>
+     <div class="field" style="color:var(--t)"><svg><use href="#i-cal"/></svg>10/12/2026 · 15:00</div>
+     <div class="row" style="gap:8px;margin:10px 0 16px"><span class="ghost">+7 días</span><span class="ghost">+1 mes</span><span class="ghost">+1 año</span></div>
+     <div class="lbl">Notas del administrador</div>
+     <textarea class="ta">Paga siempre por Continental.</textarea>
+     <div class="btn" style="margin-top:16px;height:46px">Guardar cambios</div>
+    </div>
+    <div class="glassbox" style="padding:18px 22px;border-radius:20px">
+     <div class="row" style="justify-content:space-between"><div><b>Sesión activa</b><div class="small mut" style="margin-top:4px">Smart TV · Samsung</div></div><span class="ghost danger">Cerrar sesiones</span></div>
+    </div>
+   </div>
+   <div class="glassbox" style="padding:20px 22px;border-radius:20px">
+    <div class="row" style="justify-content:space-between;margin-bottom:10px"><b style="font-size:16px">Últimas reproducciones</b><span class="small mut">3 IPs distintas en 24 h</span></div>
+    <table>
+     <tr><th>EVENTO</th><th>IP</th><th>DISPOSITIVO</th><th>CUÁNDO</th></tr>
+     <tr><td>Final Copa Interbarrios 2026</td><td class="mono">181.120.44.12</td><td class="mut">Smart TV · Samsung</td><td class="mut">Hoy 21:02</td></tr>
+     <tr><td>Festival de Polca y Guarania</td><td class="mono">181.120.44.12</td><td class="mut">Smart TV · Samsung</td><td class="mut">Hoy 19:40</td></tr>
+     <tr><td>Culto de Domingo</td><td class="mono">200.85.33.7</td><td class="mut">Android · Chrome</td><td class="mut">Ayer 10:05</td></tr>
+     <tr><td>Clásico de Futsal</td><td class="mono">186.16.201.90</td><td class="mut">Android · Chrome</td><td class="mut">Ayer 08:30</td></tr>
+     <tr><td>Conferencia Tech Asunción</td><td class="mono">181.120.44.12</td><td class="mut">Smart TV · Samsung</td><td class="mut">21/11 20:15</td></tr>
+    </table>
+   </div>
+  </div>
+ </div>
+</div></section>
+
+<!-- A5 Eventos -->
+<section id="a05" class="desk glow" data-nav="evt"><div class="grain"></div><div class="adm">
+ <div class="main">
+  <div class="ph"><div><h1>Eventos</h1><p>3 en vivo · 4 próximos · 2 ocultos</p></div><div class="btn" style="width:auto;padding:0 20px;height:44px"><svg class="ico" style="width:18px"><use href="#i-plus"/></svg>Nuevo evento</div></div>
+  <div class="tools"><div class="search"><svg class="ico"><use href="#i-search"/></svg>Buscar evento</div><div class="chip on">Todos</div><div class="chip">En vivo</div><div class="chip">Próximos</div><div class="chip">Terminados</div><div class="chip">Ocultos</div></div>
+  <div class="glassbox ev" style="border-radius:20px;overflow:hidden">
+  <table>
+   <tr><th>EVENTO</th><th>CATEGORÍA</th><th>HORARIO</th><th>ENLACES</th><th>VISIBLE</th><th>DESTACADO</th><th></th></tr>
+   <tr><td><div class="row" style="gap:14px"><div class="poster"><div class="art a1"></div></div><div class="who"><b>Final Copa Interbarrios 2026</b><span class="row" style="gap:6px;margin-top:4px"><span class="live" style="font-size:9px;padding:2px 6px">EN VIVO</span></span></div></div></td><td>Deportes</td><td class="mut">Hoy 19:30 – 22:00</td><td>3</td><td><div class="sw on"></div></td><td><svg class="ico star" style="fill:#FFC23D"><use href="#i-star"/></svg></td><td style="text-align:right"><span class="ghost"><svg class="ico" style="width:15px"><use href="#i-edit"/></svg>Editar</span></td></tr>
+   <tr><td><div class="row" style="gap:14px"><div class="poster"><div class="art a2"></div></div><div class="who"><b>Festival de Polca y Guarania</b><span class="row" style="gap:6px;margin-top:4px"><span class="live" style="font-size:9px;padding:2px 6px">EN VIVO</span></span></div></div></td><td>Música</td><td class="mut">Hoy 18:00 – 23:30</td><td>2</td><td><div class="sw on"></div></td><td><svg class="ico" style="color:var(--t3)"><use href="#i-star"/></svg></td><td style="text-align:right"><span class="ghost"><svg class="ico" style="width:15px"><use href="#i-edit"/></svg>Editar</span></td></tr>
+   <tr><td><div class="row" style="gap:14px"><div class="poster"><div class="art a5"></div></div><div class="who"><b>Noche de Rock Paraguayo</b><span>Próximo</span></div></div></td><td>Música</td><td class="mut">Sáb 28 · 20:00</td><td>1</td><td><div class="sw on"></div></td><td><svg class="ico" style="color:var(--t3)"><use href="#i-star"/></svg></td><td style="text-align:right"><span class="ghost"><svg class="ico" style="width:15px"><use href="#i-edit"/></svg>Editar</span></td></tr>
+   <tr><td><div class="row" style="gap:14px"><div class="poster"><div class="art a6"></div></div><div class="who"><b>Clásico de Futsal</b><span>Próximo</span></div></div></td><td>Deportes</td><td class="mut">Dom 29 · 18:00</td><td>2</td><td><div class="sw on"></div></td><td><svg class="ico" style="color:var(--t3)"><use href="#i-star"/></svg></td><td style="text-align:right"><span class="ghost"><svg class="ico" style="width:15px"><use href="#i-edit"/></svg>Editar</span></td></tr>
+   <tr><td><div class="row" style="gap:14px"><div class="poster"><div class="art a3"></div></div><div class="who"><b>Vigilia de Caacupé</b><span>Próximo · borrador</span></div></div></td><td>Religiosos</td><td class="mut">Mar 8/12 · 19:00</td><td style="color:var(--warn)">0</td><td><div class="sw"></div></td><td><svg class="ico" style="color:var(--t3)"><use href="#i-star"/></svg></td><td style="text-align:right"><span class="ghost"><svg class="ico" style="width:15px"><use href="#i-edit"/></svg>Editar</span></td></tr>
+  </table></div>
+ </div>
+</div></section>
+
+<!-- A6 Editar evento -->
+<section id="a06" class="desk glow" data-nav="evt"><div class="grain"></div><div class="adm">
+ <div class="main">
+  <div class="ph"><div class="row" style="gap:14px"><div class="back glassbox" style="border-radius:13px"><svg class="ico"><use href="#i-back"/></svg></div><div><h1>Editar evento</h1><p>Final Copa Interbarrios 2026</p></div></div><div class="row" style="gap:10px"><span class="ghost danger"><svg class="ico" style="width:15px"><use href="#i-trash"/></svg>Borrar</span><div class="btn" style="width:auto;padding:0 22px;height:44px">Guardar</div></div></div>
+  <div style="display:grid;grid-template-columns:1fr 520px;gap:22px">
+   <div class="glassbox" style="padding:22px;border-radius:20px">
+    <div class="form">
+     <div class="full"><div class="lbl">Título</div><div class="field" style="color:var(--t)">Final Copa Interbarrios 2026</div></div>
+     <div><div class="lbl">Categoría</div><div class="field" style="color:var(--t)">Deportes</div></div>
+     <div class="row" style="gap:22px;padding-top:24px"><div class="row" style="gap:10px"><div class="sw on"></div><span class="small">Visible</span></div><div class="row" style="gap:10px"><div class="sw on"></div><span class="small">Destacado</span></div></div>
+     <div><div class="lbl">Empieza</div><div class="field" style="color:var(--t)"><svg><use href="#i-cal"/></svg>22/11/2026 · 19:30</div></div>
+     <div><div class="lbl">Termina (opcional)</div><div class="field" style="color:var(--t)"><svg><use href="#i-cal"/></svg>22/11/2026 · 22:00</div></div>
+     <div class="full"><div class="lbl">Descripción</div><textarea class="ta">Los dos mejores equipos del torneo se enfrentan por el título.</textarea></div>
+     <div class="full"><div class="lbl">Imagen</div><div class="row" style="gap:16px"><div class="poster" style="width:200px;height:112px;border-radius:14px"><div class="art a1"></div></div><div class="ghost" style="height:44px"><svg class="ico" style="width:16px"><use href="#i-upload"/></svg>Subir imagen (JPG, PNG o WebP · máx. 3 MB)</div></div></div>
+    </div>
+   </div>
+   <div class="glassbox" style="padding:22px;border-radius:20px">
+    <div class="row" style="justify-content:space-between;margin-bottom:14px"><b style="font-size:16px">Enlaces <span class="mut small">(arrastrá para ordenar)</span></b><span class="ghost"><svg class="ico" style="width:15px"><use href="#i-plus"/></svg>Agregar</span></div>
+    <div class="lk glassbox" style="border-color:var(--o)"><svg class="ico drag"><use href="#i-drag"/></svg><div style="min-width:0;flex:1"><div class="row" style="gap:8px;margin-bottom:6px"><b style="font-size:14px">Servidor 1 HD</b><span class="t">HLS</span><span class="t" style="background:rgba(242,106,10,.2);color:var(--o2)">PROXY</span></div><div class="u">https://cdn.organizador.com.py/live/final/index.m3u8</div></div><span class="ghost" style="height:30px">Probar</span></div>
+    <div class="lk glassbox"><svg class="ico drag"><use href="#i-drag"/></svg><div style="min-width:0;flex:1"><div class="row" style="gap:8px;margin-bottom:6px"><b style="font-size:14px">Servidor 2</b><span class="t">DASH</span><span class="t">CLEARKEY</span></div><div class="u">https://stream2.example.com/final/manifest.mpd</div></div><span class="ghost" style="height:30px">Probar</span></div>
+    <div class="lk glassbox"><svg class="ico drag"><use href="#i-drag"/></svg><div style="min-width:0;flex:1"><div class="row" style="gap:8px;margin-bottom:6px"><b style="font-size:14px">Web oficial</b><span class="t">WEB</span></div><div class="u">https://canal.example.com.py/en-vivo</div></div><span class="ghost" style="height:30px">Probar</span></div>
+    <div class="hr"></div>
+    <b style="font-size:14px">Servidor 1 HD</b>
+    <div class="form" style="margin-top:12px">
+     <div><div class="lbl">Tipo</div><div class="row" style="gap:6px"><div class="chip on">HLS</div><div class="chip">DASH</div><div class="chip">Web</div></div></div>
+     <div><div class="lbl">DRM</div><div class="row" style="gap:6px"><div class="chip on">Ninguno</div><div class="chip">ClearKey</div><div class="chip">Widevine</div></div></div>
+     <div class="full row" style="gap:10px"><div class="sw on"></div><span class="small">Usar proxy (arregla CORS y http; usa ancho de banda del servidor)</span></div>
+    </div>
+   </div>
+  </div>
+ </div>
+</div></section>
+
+<!-- A7 Probar enlace -->
+<section id="a07" class="desk glow" data-nav="evt" data-base="a06"><div class="grain"></div>
+ <div class="modal-bg"></div>
+ <div class="modal glassbox" style="width:760px">
+  <div class="row" style="justify-content:space-between;margin-bottom:14px"><h2>Probar «Servidor 2»</h2><svg class="ico" style="color:var(--t3)"><use href="#i-x"/></svg></div>
+  <div class="testbox"><div class="player" style="background:linear-gradient(135deg,#1a1a22,#0b0b10)"></div>
+   <div style="position:absolute;inset:0;display:grid;place-items:center;text-align:center;padding:30px"><div><svg class="ico" style="width:46px;height:46px;color:var(--bad)"><use href="#i-alert"/></svg><div style="font-weight:800;font-size:17px;margin-top:10px">No se pudo reproducir</div><div class="small mut" style="margin-top:6px">El servidor de origen no permite que otra página lo lea (CORS).</div></div></div></div>
+  <div class="notice warn" style="margin-top:16px"><svg class="ico" style="color:var(--warn);flex:none"><use href="#i-alert"/></svg><span>Probá activar <b>Usar proxy</b> para este enlace. Si el origen también bloquea los segmentos de video, pedile al proveedor un enlace compatible.</span></div>
+  <div class="row" style="gap:12px;margin-top:18px"><div class="btn2" style="flex:1">Cerrar</div><div class="btn" style="flex:1">Activar proxy y volver a probar</div></div>
+ </div>
+</section>
+
+<!-- A8 Seguridad -->
+<section id="a08" class="desk glow" data-nav="seg"><div class="grain"></div><div class="adm">
+ <div class="main">
+  <div class="ph"><div><h1>Cuentas sospechosas</h1><p>Cuentas que reprodujeron desde muchas IPs distintas. Pueden estar compartiendo la cuenta.</p></div>
+   <div class="row" style="gap:10px"><div class="chip on">Últimas 24 h</div><div class="chip">7 días</div><div class="chip">3+ IPs</div></div></div>
+  <div class="glassbox" style="border-radius:20px;overflow:hidden">
+  <table>
+   <tr><th>USUARIO</th><th>IPS DISTINTAS</th><th></th><th>REPRODUCCIONES</th><th>ÚLTIMA</th><th style="text-align:right">ACCIONES</th></tr>
+   <tr class="hi"><td class="who"><b>Roberto Acosta</b><span>racosta@yahoo.com</span></td><td><b style="font-size:20px;color:var(--bad)">9</b></td><td style="width:220px"><div class="bar2"><i style="width:90%"></i></div></td><td>41</td><td class="mut">Hace 5 min</td><td style="text-align:right"><span class="ghost" style="margin-right:6px">Ver</span><span class="ghost danger">Suspender</span></td></tr>
+   <tr><td class="who"><b>Lucía Fernández</b><span>luciaf@gmail.com</span></td><td><b style="font-size:20px;color:var(--warn)">5</b></td><td><div class="bar2"><i style="width:50%"></i></div></td><td>17</td><td class="mut">Hace 1 h</td><td style="text-align:right"><span class="ghost" style="margin-right:6px">Ver</span><span class="ghost danger">Suspender</span></td></tr>
+   <tr><td class="who"><b>Juan Benítez</b><span>juan.benitez@gmail.com</span></td><td><b style="font-size:20px">3</b></td><td><div class="bar2"><i style="width:30%"></i></div></td><td>8</td><td class="mut">Hoy 21:02</td><td style="text-align:right"><span class="ghost" style="margin-right:6px">Ver</span><span class="ghost danger">Suspender</span></td></tr>
+  </table></div>
+  <p class="small mut" style="margin-top:14px">Tres IPs en un día pueden ser normales (casa, trabajo, datos móviles). Mirá el detalle antes de suspender.</p>
+ </div>
+</div></section>
+
+<!-- A9 Planes -->
+<section id="a09" class="desk glow" data-nav="pla"><div class="grain"></div><div class="adm">
+ <div class="main">
+  <div class="ph"><div><h1>Planes</h1><p>Lo que ven los clientes al elegir plan. Los cambios no afectan solicitudes ya hechas.</p></div><div class="btn" style="width:auto;padding:0 20px;height:44px"><svg class="ico" style="width:18px"><use href="#i-plus"/></svg>Nuevo plan</div></div>
+  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px">
+   <div class="glassbox" style="padding:22px;border-radius:22px"><div class="row" style="justify-content:space-between;margin-bottom:16px"><b style="font-size:18px">Semanal</b><div class="sw on"></div></div><div class="lbl">Precio (Gs)</div><div class="field" style="color:var(--t);margin-bottom:12px">5.000</div><div class="lbl">Duración (días)</div><div class="field" style="color:var(--t);margin-bottom:12px">7</div><div class="lbl">Orden</div><div class="field" style="color:var(--t)">1</div></div>
+   <div class="glassbox" style="padding:22px;border-radius:22px;border-color:var(--o)"><div class="row" style="justify-content:space-between;margin-bottom:16px"><b style="font-size:18px">Mensual</b><div class="sw on"></div></div><div class="lbl">Precio (Gs)</div><div class="field f" style="margin-bottom:12px">20.000</div><div class="lbl">Duración (días)</div><div class="field" style="color:var(--t);margin-bottom:12px">30</div><div class="lbl">Orden</div><div class="field" style="color:var(--t)">2</div><div class="btn" style="margin-top:16px;height:44px">Guardar</div></div>
+   <div class="glassbox" style="padding:22px;border-radius:22px"><div class="row" style="justify-content:space-between;margin-bottom:16px"><b style="font-size:18px">Anual</b><div class="sw on"></div></div><div class="lbl">Precio (Gs)</div><div class="field" style="color:var(--t);margin-bottom:12px">240.000</div><div class="lbl">Duración (días)</div><div class="field" style="color:var(--t);margin-bottom:12px">365</div><div class="lbl">Orden</div><div class="field" style="color:var(--t)">3</div></div>
+  </div>
+ </div>
+</div></section>
+
+<!-- A10 Configuración -->
+<section id="a10" class="desk glow" data-nav="cfg"><div class="grain"></div><div class="adm">
+ <div class="main">
+  <div class="ph"><div><h1>Configuración</h1><p>Datos que ven los clientes en la app.</p></div><div class="btn" style="width:auto;padding:0 22px;height:44px">Guardar</div></div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px">
+   <div class="glassbox" style="padding:22px;border-radius:20px">
+    <b style="font-size:16px">Datos para la transferencia</b>
+    <p class="small mut" style="margin:6px 0 12px">Una línea por dato, con el formato <span class="mono">Nombre: valor</span>. Cada línea se muestra con botón de copiar.</p>
+    <textarea class="ta mono" style="min-height:170px">Banco: Banco Continental
+Titular: Paraguay Play TV
+Cuenta: 1234-567890
+RUC / CI: 4.567.890-1
+Alias: 0981234567</textarea>
+   </div>
+   <div class="glassbox" style="padding:22px;border-radius:20px">
+    <b style="font-size:16px">Así lo ve el cliente</b>
+    <div style="margin-top:12px" class="glassbox"><div style="padding:4px 16px">
+     <div class="kv2"><span>Banco</span><b>Banco Continental</b></div><div class="kv2"><span>Titular</span><b>Paraguay Play TV</b></div><div class="kv2"><span>Cuenta</span><b>1234-567890</b></div><div class="kv2"><span>RUC / CI</span><b>4.567.890-1</b></div><div class="kv2" style="border:none"><span>Alias</span><b>0981234567</b></div></div></div>
+   </div>
+   <div class="glassbox" style="padding:22px;border-radius:20px">
+    <div class="lbl">WhatsApp de soporte (con código de país)</div><div class="field" style="color:var(--t);margin-bottom:16px"><svg><use href="#i-wa"/></svg>595 981 123 456</div>
+    <div class="lbl">Enlace de descarga del APK</div><div class="field" style="color:var(--t)"><svg><use href="#i-upload"/></svg>https://paraguayplaytv.com/descargas/ppt.apk</div>
+   </div>
+   <div class="glassbox" style="padding:22px;border-radius:20px">
+    <div class="lbl">Texto de ayuda</div><textarea class="ta" style="min-height:110px">Escribinos por WhatsApp de 8 a 22 h. Si tu TV no aparece, abrí la app en el navegador del televisor.</textarea>
+   </div>
+  </div>
+ </div>
+</div></section>
+
+<!-- M1 Solicitudes en el celular -->
+<section id="m01" class="phone glow"><div class="grain"></div><div style="position:relative;z-index:1">
+ <div class="sb" style="height:44px;display:flex;align-items:center;justify-content:space-between;padding:0 26px;font-size:15px;font-weight:600"><span>9:41</span><i style="font-style:normal;font-size:12px">●●● 5G ▮</i></div>
+ <div class="mtop"><div class="row" style="gap:10px"><img src="../../../../assets/logo.png" style="width:32px"><div><span class="brand" style="font-size:14px">PANEL</span></div></div><div class="avatar" style="width:36px;height:36px;font-size:14px">M</div></div>
+ <div style="padding:14px 18px 0">
+  <div class="row" style="gap:8px;overflow:hidden;margin-bottom:16px"><div class="chip on">Solicitudes <span class="n">4</span></div><div class="chip">Usuarios</div><div class="chip">Eventos</div><div class="chip">Seguridad</div></div>
+  <div class="glassbox mcard" style="border-color:rgba(242,106,10,.45)">
+   <div class="row" style="justify-content:space-between"><div class="who"><b>Juan Benítez</b><span>0981 234 567</span></div><span class="mono mut">N.º 128</span></div>
+   <div class="row" style="justify-content:space-between;margin:12px 0"><span class="small mut">Mensual · hace 12 min</span><b style="font-size:20px">Gs 20.000</b></div>
+   <div class="row" style="gap:10px"><div class="btn2" style="height:44px;font-size:14px;flex:1;color:var(--bad)">Rechazar</div><div class="btn" style="height:44px;font-size:14px;flex:2">Aprobar</div></div>
+  </div>
+  <div class="glassbox mcard">
+   <div class="row" style="justify-content:space-between"><div class="who"><b>María López</b><span>0971 555 210 · activa, 6 días</span></div><span class="mono mut">N.º 127</span></div>
+   <div class="row" style="justify-content:space-between;margin:12px 0"><span class="small mut">Anual · hace 40 min</span><b style="font-size:20px">Gs 240.000</b></div>
+   <div class="row" style="gap:10px"><div class="btn2" style="height:44px;font-size:14px;flex:1;color:var(--bad)">Rechazar</div><div class="btn" style="height:44px;font-size:14px;flex:2">Aprobar</div></div>
+  </div>
+  <div class="glassbox mcard">
+   <div class="row" style="justify-content:space-between"><div class="who"><b>Carlos Giménez</b><span>0985 300 100 · vencida</span></div><span class="mono mut">N.º 125</span></div>
+   <div class="row" style="justify-content:space-between;margin:12px 0"><span class="small mut">Semanal · hoy 08:15</span><b style="font-size:20px">Gs 5.000</b></div>
+   <div class="row" style="gap:10px"><div class="btn2" style="height:44px;font-size:14px;flex:1;color:var(--bad)">Rechazar</div><div class="btn" style="height:44px;font-size:14px;flex:2">Aprobar</div></div>
+  </div>
+ </div>
+</div></section>
+
+<!-- M2 Aprobar en el celular -->
+<section id="m02" class="phone glow"><div class="grain"></div><div style="position:relative;z-index:1;filter:blur(1px);opacity:.5">
+ <div style="height:44px"></div><div class="mtop"><img src="../../../../assets/logo.png" style="width:32px"></div>
+</div>
+ <div class="modal-bg"></div>
+ <div class="glassbox" style="position:absolute;left:12px;right:12px;bottom:20px;z-index:6;padding:24px 20px;border-radius:26px;background:rgba(24,24,30,.96)">
+  <h2 style="font-size:20px;font-weight:900">Aprobar N.º 128</h2>
+  <div class="dl" style="grid-template-columns:110px 1fr;margin:14px 0">
+   <span>Usuario</span><b>Juan Benítez</b><span>Plan</span><b>Mensual · 30 días</b><span>Monto</span><b style="color:var(--o2)">Gs 20.000</b>
+  </div>
+  <div class="lbl">Nuevo vencimiento</div>
+  <div class="field f" style="color:var(--t)"><svg><use href="#i-cal"/></svg>23/12/2026 · 01:05</div>
+  <p class="small mut" style="margin:8px 4px 16px">Desde hoy + 30 días. Podés cambiarlo.</p>
+  <div class="lbl">Nota (opcional)</div>
+  <textarea class="ta" style="min-height:64px" placeholder="Ref. de la transferencia"></textarea>
+  <div class="btn" style="margin-top:18px"><svg class="ico" style="width:18px"><use href="#i-check"/></svg>Aprobar y activar</div>
+  <div class="btn2" style="margin-top:10px">Cancelar</div>
+ </div>
+</section>
+
+<script>
+const id=location.hash.slice(1)||'a01';
+const sec=document.getElementById(id); sec.classList.add('on');
+const tpl=document.getElementById('side');
+function addSide(target,k){const s=tpl.content.cloneNode(true); s.querySelectorAll('.nav a').forEach(a=>{if(a.dataset.k===k)a.classList.add('on')}); target.prepend(s);}
+if(sec.dataset.base){ // modal sobre otra pantalla
+  const base=document.getElementById(sec.dataset.base).querySelector('.adm').cloneNode(true);
+  base.style.position='absolute';base.style.inset='0';sec.prepend(base);
+}
+sec.querySelectorAll('.adm').forEach(a=>addSide(a,sec.dataset.nav));
+</script>
+</body></html>
