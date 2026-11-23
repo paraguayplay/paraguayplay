@@ -1,15 +1,16 @@
-import { EndedNotice } from './auth/EndedNotice';
+import { Login } from './auth/Login';
+import { Register } from './auth/Register';
+import { Forgot } from './auth/Forgot';
+import { Reset } from './auth/Reset';
 
 // Pantallas de relleno: cada tarea del plan reemplaza la suya.
-const stub = (name: string, extra?: () => JSX.Element) => () => (
-  <div className="screen glow" data-testid={`screen-${name}`}>{extra?.()}</div>
-);
+const stub = (name: string) => () => <div className="screen glow" data-testid={`screen-${name}`} />;
 
 export const screens = {
-  Login: stub('entrar', () => <EndedNotice />),
-  Register: stub('registro'),
-  Forgot: stub('recuperar'),
-  Reset: stub('restablecer'),
+  Login,
+  Register,
+  Forgot,
+  Reset,
   Plans: stub('planes'),
   Pay: stub('pagar'),
   InReview: stub('en-revision'),
