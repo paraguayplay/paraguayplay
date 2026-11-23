@@ -11,6 +11,7 @@ import { Categories } from './catalog/Categories';
 import { Agenda } from './catalog/Agenda';
 import { Search } from './catalog/Search';
 import { EventDetail } from './catalog/EventDetail';
+import { Player } from './player/Player';
 
 // Pantallas de relleno: cada tarea del plan reemplaza la suya.
 const stub = (name: string) => () => <div className="screen glow" data-testid={`screen-${name}`} />;
@@ -29,7 +30,7 @@ export const screens = {
   Agenda,
   Search,
   EventDetail,
-  Player: stub('ver'),
+  Player,
   Profile: stub('perfil'),
   History: stub('historial'),
   ChangePassword: stub('contrasena'),
