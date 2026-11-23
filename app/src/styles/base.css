@@ -42,3 +42,12 @@ a{color:inherit;text-decoration:none}
 .poster img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
 .spin{width:22px;height:22px;border-radius:50%;border:3px solid rgba(255,255,255,.3);border-top-color:#fff;animation:ppt-rot .8s linear infinite}
 @keyframes ppt-rot{to{transform:rotate(360deg)}}
+.hscroll-x{overflow-x:auto;scrollbar-width:none;scroll-snap-type:x proximity}
+.hscroll-x::-webkit-scrollbar{display:none}
+.hscroll-x>*{scroll-snap-align:start;flex:none}
+.tabbar a{color:var(--t3)}
+.tabbar a.on{color:var(--o2)}
+.tabbar a.on svg{filter:drop-shadow(0 0 8px rgba(242,106,10,.7))}
+.tabbar svg{width:24px;height:24px;stroke:currentColor;fill:none;stroke-width:1.9}
+.tabbar a>div{font-size:11px;font-weight:600}
+.up .poster{position:relative}
