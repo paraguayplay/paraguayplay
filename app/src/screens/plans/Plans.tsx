@@ -57,7 +57,7 @@ export function Plans() {
   return (
     <Screen id="planes">
       <AppTop />
-      <div className="wrap">
+      <div className="wrap plans-wrap">
         {status !== 'active' ? <Steps at={1} /> : <div style={{ height: 20 }} />}
         <h1 style={{ fontSize: 27, fontWeight: 900 }}>{title}</h1>
         <p className="mut" style={{ fontSize: 14.5, margin: '6px 0 22px' }}>{lead}</p>

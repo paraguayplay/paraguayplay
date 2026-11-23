@@ -29,7 +29,7 @@ export function Player() {
   const [idx, setIdx] = useState(0);
   const [failed, setFailed] = useState<string | null>(null);
   const [fatal, setFatal] = useState<string | null>(null);
-  const [paused, setPaused] = useState(false);
+  const [paused, setPaused] = useState(true); // hasta que el video arranque de verdad
   const [castable, setCastable] = useState(false);
   const [showUi, setShowUi] = useState(true);
 
@@ -85,10 +85,10 @@ export function Player() {
   // controles que se ocultan solos
   const poke = useCallback(() => setShowUi(true), []);
   useEffect(() => {
-    if (!showUi || failed) return;
+    if (!showUi || failed || paused) return; // en pausa los controles no se esconden
     const t = setTimeout(() => setShowUi(false), 4000);
     return () => clearTimeout(t);
-  }, [showUi, failed, idx]);
+  }, [showUi, failed, idx, paused]);
 
   const toggle = () => { const v = videoRef.current; if (!v) return; if (v.paused) v.play().catch(() => {}); else v.pause(); };
   const full = async () => {
@@ -142,7 +142,7 @@ export function Player() {
         </div>
       )}
 
-      <div className={`player-ui ${showUi || failed || !links ? 'on' : ''}`}>
+      <div className={`player-ui ${showUi || failed || !links || paused ? 'on' : ''}`}>
         <div className="player-top row">
           <button className="back" aria-label="Volver" onClick={() => nav(-1)}><Icon name="back" /></button>
           {tv && <img src="/logo.png" alt="" style={{ width: 60, marginLeft: 12 }} />}

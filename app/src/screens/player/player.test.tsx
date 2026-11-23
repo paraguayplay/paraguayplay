@@ -87,3 +87,15 @@ test('configuración de DRM para Shaka', () => {
   expect(shakaConfig({ label: 'a', type: 'dash', url: 'u', drm: { type: 'widevine', clearkeys: null, license_url: 'https://lic' }, headers: null })).toEqual({ drm: { servers: { 'com.widevine.alpha': 'https://lic' } } });
   expect(shakaConfig({ label: 'a', type: 'hls', url: 'u', drm: { type: null, clearkeys: null, license_url: null }, headers: null })).toEqual({});
 });
+
+test('si el navegador no deja arrancar solo, los controles quedan visibles con Reproducir', async () => {
+  engine.failFirst = false;
+  vi.useFakeTimers({ shouldAdvanceTime: true });
+  try {
+    renderAt('/ver/1');
+    await screen.findByRole('button', { name: 'Servidor 2' });
+    await act(async () => { await vi.advanceTimersByTimeAsync(6000); });
+    const play = screen.getByRole('button', { name: 'Reproducir' });
+    expect(play.closest('.player-ui')).toHaveClass('on');
+  } finally { vi.useRealTimers(); }
+});

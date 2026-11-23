@@ -86,6 +86,24 @@ cp laravel/deploy/public_html/.htaccess public_html/
 ln -s ../laravel/storage/app/public public_html/storage
 ```
 
+## 5b. Subir la app (celular y TV)
+
+En tu computadora (o por SSH, si el plan tiene Node):
+
+```bash
+cd app
+npm ci
+npm run build
+```
+
+Sube **el contenido** de `app/dist/` a `public_html/` (con el Administrador de archivos de hPanel o con `rsync`). No borres `public_html/laravel.php`, `public_html/.htaccess` ni `public_html/storage`.
+
+```bash
+rsync -a app/dist/ usuario@servidor:~/domains/paraguayplaytv.com/public_html/
+```
+
+En el `.env` de Laravel, `FRONTEND_URL` debe ser tu dominio (`https://paraguayplaytv.com`): con eso se arman los enlaces del correo de contraseña y el QR del TV.
+
 ## 6. Comprobar
 
 Abre en el navegador `https://paraguayplaytv.com/api/health`. Debe mostrar:
@@ -95,6 +113,8 @@ Abre en el navegador `https://paraguayplaytv.com/api/health`. Debe mostrar:
 ```
 
 Y `https://paraguayplaytv.com/api/plans` debe mostrar los 3 planes.
+
+Luego abre `https://paraguayplaytv.com` en el celular: debe aparecer la pantalla de inicio de sesión. En un televisor, la misma dirección muestra el código y el QR (si el TV no se reconoce solo, agrega `?modo=tv` una vez).
 
 ## Actualizar más adelante
 

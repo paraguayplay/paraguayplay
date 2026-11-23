@@ -56,3 +56,15 @@ html.tv .btn:focus,html.tv .btn2:focus{transform:scale(1.06)}
 .tvhint{position:fixed;bottom:34px;right:96px;display:flex;gap:30px;font-size:19px;color:var(--t3);font-weight:600;z-index:9}
 .tvhint b{display:inline-grid;place-items:center;min-width:40px;height:34px;padding:0 10px;border-radius:9px;border:1px solid var(--gb);background:var(--glass);color:var(--t2);margin-right:8px;font-size:15px}
 html.tv .chip{height:64px;padding:0 34px;font-size:22px}
+
+/* ajustes tras comparar con las maquetas */
+html.tv .tvtop{position:fixed}
+html.tv .screen{padding-bottom:120px}
+html.tv .screen:not(.tvnative) .wrap.plans-wrap{max-width:1100px;text-align:center}
+html.tv .plans-wrap [role=radiogroup]{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:30px}
+html.tv .plans-wrap .plan{flex-direction:column;text-align:center;gap:8px!important;padding:28px 18px;margin:0!important}
+html.tv .plans-wrap .plan .radio{display:none}
+html.tv .plans-wrap .plan .badge{left:50%;right:auto;transform:translateX(-50%)}
+html.tv .plans-wrap .steps{display:none}
+html.tv .plans-wrap>.glassbox{display:none}
+html.tv .plans-wrap>.btn{max-width:420px;margin:26px auto 0}

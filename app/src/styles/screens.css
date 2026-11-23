@@ -78,8 +78,8 @@
 .ring b{font-size:26px;font-weight:900;display:block;line-height:1}
 .ring span{font-size:10px;color:var(--t2);font-weight:700;letter-spacing:.5px}
 
-.modal-bg{position:absolute;inset:0;background:rgba(0,0,0,.6);backdrop-filter:blur(6px);z-index:6}
-.sheet{position:absolute;left:14px;right:14px;bottom:24px;z-index:7;padding:26px 22px 22px;text-align:center}
+.modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.6);backdrop-filter:blur(6px);z-index:6}
+.sheet{position:fixed;left:14px;right:14px;bottom:24px;z-index:7;padding:26px 22px 22px;text-align:center}
 .warnic{width:72px;height:72px;margin:0 auto 14px;border-radius:22px;display:grid;place-items:center;background:linear-gradient(180deg,rgba(255,194,61,.25),rgba(255,194,61,.08));border:1px solid rgba(255,194,61,.4);color:var(--warn);box-shadow:0 0 30px rgba(255,194,61,.25)}
 
 /* ====== TV ====== */
@@ -124,3 +124,5 @@ html.tv .srv button{font-size:22px;padding:20px 28px;border-radius:16px}
 html.tv .player-center .bigplay{width:96px;height:96px}
 .menu .it{width:100%;text-align:left;color:inherit}
 html:not(.tv) .profile-grid>*+*{margin-top:16px}
+.modal-bg{z-index:20}.sheet{z-index:21;max-width:480px;margin:0 auto}
+html.tv .sheet{zoom:1.6;bottom:auto;top:50%;transform:translateY(-50%)}
