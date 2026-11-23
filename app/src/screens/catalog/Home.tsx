@@ -10,6 +10,8 @@ import { Poster } from '../../ui/Poster';
 import { Icon } from '../../ui/Icon';
 import { LiveTag, Skeleton } from '../../ui/misc';
 import { CatalogState, EventCard, EventRow, RowSkeleton, when } from './parts';
+import { TvHome } from './TvHome';
+import { isTvMode } from '../../lib/tv';
 
 export function Home() {
   const nav = useNavigate();
@@ -20,6 +22,14 @@ export function Home() {
   const live = (data?.live ?? []).filter(inCat).filter((e) => !featured || cat || e.id !== featured.id);
   const upcoming = (data?.upcoming ?? []).filter(inCat);
   const cats = data?.categories.map((c) => c.name) ?? [];
+
+  if (isTvMode()) return (
+    <Screen id="inicio" bar tvNative>
+      <div style={{ padding: '0 96px' }}><CatalogState loading={loading} error={data ? null : error} offline={offline} empty={!!data && isEmpty(data)} onRetry={reload} /></div>
+      {data && <TvHome data={data} />}
+      <TabBar />
+    </Screen>
+  );
 
   return (
     <Screen id="inicio" bar>

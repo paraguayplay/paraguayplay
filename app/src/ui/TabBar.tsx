@@ -1,9 +1,12 @@
 import { NavLink } from 'react-router-dom';
-import { Icon, type IconName } from './Icon';
+import { type IconName } from './Icon';
+import { isTvMode } from '../lib/tv';
+import { TvNav } from '../tv/TvShell';
 
 const TABS: [string, IconName, string][] = [['/', 'home', 'Inicio'], ['/categorias', 'grid', 'Categorías'], ['/agenda', 'cal', 'Agenda'], ['/perfil', 'user', 'Perfil']];
 
 export function TabBar() {
+  if (isTvMode()) return <TvNav />;
   return (
     <nav className="tabbar glassbox" style={{ position: 'fixed', background: 'rgba(20,20,26,.82)' }} aria-label="Secciones">
       {TABS.map(([to, icon, label]) => (

@@ -10,8 +10,8 @@ export function OtherDeviceDialog({ device, busy, onConfirm, onCancel }: { devic
       <p className="mut" style={{ fontSize: 14.5, lineHeight: 1.5, margin: '10px 4px 20px' }}>
         Hay una sesión activa en <b style={{ color: 'var(--t)' }}>{device}</b>. Tu plan permite un dispositivo a la vez.
       </p>
-      <Button onClick={onConfirm} loading={busy} style={{ marginBottom: 12 }}>Usar en este celular</Button>
-      <Button variant="secondary" onClick={onCancel}>Cancelar</Button>
+      <Button onClick={onConfirm} loading={busy} style={{ marginBottom: 12 }} data-autofocus>Usar en este celular</Button>
+      <Button variant="secondary" onClick={onCancel} data-dialog-cancel>Cancelar</Button>
       <p className="small" style={{ color: 'var(--t3)', marginTop: 14 }}>La otra sesión se cerrará en menos de un minuto.</p>
     </Dialog>
   );

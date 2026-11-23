@@ -1,4 +1,4 @@
-import { Login } from './auth/Login';
+import { LoginEntry } from './auth/LoginEntry';
 import { Register } from './auth/Register';
 import { Forgot } from './auth/Forgot';
 import { Reset } from './auth/Reset';
@@ -18,7 +18,7 @@ import { ChangePassword } from './profile/ChangePassword';
 import { LinkTv } from './profile/LinkTv';
 
 export const screens = {
-  Login,
+  Login: LoginEntry,
   Register,
   Forgot,
   Reset,

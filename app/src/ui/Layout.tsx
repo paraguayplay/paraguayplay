@@ -2,9 +2,9 @@ import type { ReactNode } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Icon, type IconName } from './Icon';
 
-export function Screen({ id, children, bar = false, glow = true, className = '' }: { id: string; children: ReactNode; bar?: boolean; glow?: boolean; className?: string }) {
+export function Screen({ id, children, bar = false, glow = true, tvNative = false, className = '' }: { id: string; children: ReactNode; bar?: boolean; glow?: boolean; tvNative?: boolean; className?: string }) {
   return (
-    <div className={`screen ${glow ? 'glow' : ''} ${bar ? '' : 'nobar'} ${className}`} data-testid={`screen-${id}`}>
+    <div className={`screen ${glow ? 'glow' : ''} ${bar ? 'with-tvnav' : 'nobar'} ${tvNative ? 'tvnative' : ''} ${className}`} data-testid={`screen-${id}`}>
       {glow && <div className="grain" />}
       <div className="z page-in">{children}</div>
     </div>
