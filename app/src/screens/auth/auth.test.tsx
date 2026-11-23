@@ -16,7 +16,7 @@ async function fillLogin() {
 }
 
 test('login correcto lleva a planes', async () => {
-  const m = mockApi([{ method: 'POST', path: '/api/auth/login', body: ok }, { path: '/api/me', body: mePending }, { path: '/api/plans', body: { data: [] } }, { path: '/api/settings/public', body: {} }]);
+  const m = mockApi([{ method: 'POST', path: '/api/auth/login', body: ok }, { path: '/api/me', body: mePending }, { path: '/api/plans', body: [] }, { path: '/api/settings/public', body: {} }]);
   renderAt('/entrar');
   await fillLogin();
   await waitFor(() => expect(screen.getByTestId('loc')).toHaveTextContent('/planes'));
@@ -27,7 +27,7 @@ test('login correcto lleva a planes', async () => {
 test('409 pregunta y "Usar en este celular" reintenta con force', async () => {
   const m = mockApi([
     { method: 'POST', path: '/api/auth/login', status: 409, body: { code: 'other_device_active', message: 'Tu cuenta está abierta en otro dispositivo (Smart TV · Living).', device: 'Smart TV · Living' } },
-    { path: '/api/me', body: mePending }, { path: '/api/plans', body: { data: [] } }, { path: '/api/settings/public', body: {} },
+    { path: '/api/me', body: mePending }, { path: '/api/plans', body: [] }, { path: '/api/settings/public', body: {} },
   ]);
   renderAt('/entrar');
   await fillLogin();
@@ -55,7 +55,7 @@ test('429 muestra demasiados intentos y el botón vuelve a habilitarse', async (
 });
 
 test('registro manda la confirmación igual a la contraseña y el dispositivo', async () => {
-  const m = mockApi([{ method: 'POST', path: '/api/auth/register', status: 201, body: ok }, { path: '/api/me', body: mePending }, { path: '/api/plans', body: { data: [] } }, { path: '/api/settings/public', body: {} }]);
+  const m = mockApi([{ method: 'POST', path: '/api/auth/register', status: 201, body: ok }, { path: '/api/me', body: mePending }, { path: '/api/plans', body: [] }, { path: '/api/settings/public', body: {} }]);
   renderAt('/registro');
   await userEvent.type(screen.getByLabelText('Nombre y apellido'), 'Juan Benítez');
   await userEvent.type(screen.getByLabelText('Correo'), 'juan@x.com');
