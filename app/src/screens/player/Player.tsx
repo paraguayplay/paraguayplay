@@ -125,7 +125,8 @@ export function Player() {
           <div className="player-msg"><p>Este servidor no funciona en el televisor</p>{next !== null && <Button onClick={() => setIdx(next)}>{`Probar ${links![next].label}`}</Button>}</div>
         ) : (
           <>
-            <iframe src={current.url} title={title} allow="autoplay; fullscreen; encrypted-media" allowFullScreen referrerPolicy="no-referrer" />
+            <iframe src={current.url} title={title} allow="autoplay; fullscreen; encrypted-media" allowFullScreen referrerPolicy="no-referrer"
+              sandbox="allow-scripts allow-same-origin allow-presentation allow-popups allow-popups-to-escape-sandbox" />
             <a className="btn2 web-open" href={current.url} target="_blank" rel="noopener noreferrer">Abrir en el navegador</a>
           </>
         )

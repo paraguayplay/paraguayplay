@@ -60,6 +60,15 @@ test('servidor web se muestra en un iframe con opción de abrir aparte', async (
   expect(screen.getByRole('link', { name: 'Abrir en el navegador' })).toHaveAttribute('href', 'https://transmision.example/en-vivo');
 });
 
+test('la página web de terceros no puede sacar al usuario de la app', async () => {
+  engine.failFirst = false;
+  renderAt('/ver/1');
+  await userEvent.click(await screen.findByRole('button', { name: 'Web' }));
+  const sb = document.querySelector('iframe')!.getAttribute('sandbox') ?? '';
+  expect(sb).toContain('allow-scripts');
+  expect(sb).not.toContain('allow-top-navigation');
+});
+
 test('si la sesión se cierra en medio del video, se detiene y libera', async () => {
   engine.failFirst = false;
   renderAt('/ver/1');
